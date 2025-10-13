@@ -6,17 +6,22 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		18F426EF2E9C787D002E3C84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18F426EC2E9C787D002E3C84 /* Assets.xcassets */; };
+		18F426F02E9C787D002E3C84 /* BreezyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F426ED2E9C787D002E3C84 /* BreezyApp.swift */; };
+		18F426F12E9C787D002E3C84 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F426EE2E9C787D002E3C84 /* ContentView.swift */; };
+		18F426FC2E9C7B10002E3C84 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F426FB2E9C7B10002E3C84 /* SplashView.swift */; };
+		18F426FE2E9C7B44002E3C84 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F426FD2E9C7B44002E3C84 /* HomeView.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		18F426DE2E9C7830002E3C84 /* Breezy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Breezy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		18F426EC2E9C787D002E3C84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		18F426ED2E9C787D002E3C84 /* BreezyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreezyApp.swift; sourceTree = "<group>"; };
+		18F426EE2E9C787D002E3C84 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		18F426FB2E9C7B10002E3C84 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		18F426FD2E9C7B44002E3C84 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		18F426E02E9C7830002E3C84 /* Breezy */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Breezy;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		18F426DB2E9C7830002E3C84 /* Frameworks */ = {
@@ -32,7 +37,7 @@
 		18F426D52E9C7830002E3C84 = {
 			isa = PBXGroup;
 			children = (
-				18F426E02E9C7830002E3C84 /* Breezy */,
+				18F426F22E9C79F8002E3C84 /* Breezy */,
 				18F426DF2E9C7830002E3C84 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +48,82 @@
 				18F426DE2E9C7830002E3C84 /* Breezy.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		18F426F22E9C79F8002E3C84 /* Breezy */ = {
+			isa = PBXGroup;
+			children = (
+				18F426F32E9C7A27002E3C84 /* App */,
+				18F426F42E9C7A2F002E3C84 /* Core */,
+				18F426F52E9C7A39002E3C84 /* Data */,
+				18F426F62E9C7A75002E3C84 /* Features */,
+				18F426F82E9C7A98002E3C84 /* Shared */,
+				18F426F72E9C7A7E002E3C84 /* Resources */,
+				18F426EE2E9C787D002E3C84 /* ContentView.swift */,
+			);
+			path = Breezy;
+			sourceTree = "<group>";
+		};
+		18F426F32E9C7A27002E3C84 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				18F426ED2E9C787D002E3C84 /* BreezyApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		18F426F42E9C7A2F002E3C84 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		18F426F52E9C7A39002E3C84 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		18F426F62E9C7A75002E3C84 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				18F426FA2E9C7AFD002E3C84 /* Onboarding */,
+				18F426F92E9C7AF6002E3C84 /* Home */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		18F426F72E9C7A7E002E3C84 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				18F426EC2E9C787D002E3C84 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		18F426F82E9C7A98002E3C84 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		18F426F92E9C7AF6002E3C84 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				18F426FD2E9C7B44002E3C84 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		18F426FA2E9C7AFD002E3C84 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				18F426FB2E9C7B10002E3C84 /* SplashView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -59,9 +140,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				18F426E02E9C7830002E3C84 /* Breezy */,
 			);
 			name = Breezy;
 			packageProductDependencies = (
@@ -109,6 +187,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18F426EF2E9C787D002E3C84 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +198,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18F426F02E9C787D002E3C84 /* BreezyApp.swift in Sources */,
+				18F426FE2E9C7B44002E3C84 /* HomeView.swift in Sources */,
+				18F426F12E9C787D002E3C84 /* ContentView.swift in Sources */,
+				18F426FC2E9C7B10002E3C84 /* SplashView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
