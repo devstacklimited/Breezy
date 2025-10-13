@@ -6,33 +6,142 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXFileReference section */
-		18F426DE2E9C7830002E3C84 /* Breezy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Breezy.app; sourceTree = BUILT_PRODUCTS_DIR; };
-/* End PBXFileReference section */
+/* Begin PBXBuildFile section */
+		18A13DC22E9D7A0E0013F7A4 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A13DC12E9D7A0E0013F7A4 /* ApiError.swift */; };
+		18D4A2032E9D82C80042D0DE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 18D4A2022E9D82C80042D0DE /* Alamofire */; };
+		18D4A2072E9D83D80042D0DE /* BaseApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4A2062E9D83D80042D0DE /* BaseApiClient.swift */; };
+		18D4A20D2E9D84FB0042D0DE /* ApiRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4A20C2E9D84FB0042D0DE /* ApiRouter.swift */; };
+		18D4A20F2E9D86630042D0DE /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4A20E2E9D86630042D0DE /* AppConstants.swift */; };
+		18D4A2112E9D86B10042D0DE /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4A2102E9D86B10042D0DE /* AppEnvironment.swift */; };
+		18D4A2132E9D89890042D0DE /* Encodable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4A2122E9D89890042D0DE /* Encodable+Extensions.swift */; };
+		18D4A2152E9D89AD0042D0DE /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4A2142E9D89AD0042D0DE /* Dictionary+Extensions.swift */; };
+		18D4A2192E9D92E60042D0DE /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4A2182E9D92E60042D0DE /* WeatherService.swift */; };
+		18D4A21B2E9D951C0042D0DE /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4A21A2E9D951C0042D0DE /* WeatherResponse.swift */; };
+		18D4A21D2E9D98B50042D0DE /* WeatherIntrector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4A21C2E9D98B50042D0DE /* WeatherIntrector.swift */; };
+		18D4A21F2E9D9C610042D0DE /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4A21E2E9D9C610042D0DE /* HomePresenter.swift */; };
+		18D4A2212E9D9DA30042D0DE /* WeatherParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4A2202E9D9DA30042D0DE /* WeatherParams.swift */; };
+		18D4A2242E9DA6220042D0DE /* Staging.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 18D4A2232E9DA6220042D0DE /* Staging.xcconfig */; };
+		18D4A2262E9DA6450042D0DE /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 18D4A2252E9DA6450042D0DE /* Production.xcconfig */; };
+		18F426EF2E9C787D002E3C84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18F426EC2E9C787D002E3C84 /* Assets.xcassets */; };
+		18F426F02E9C787D002E3C84 /* BreezyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F426ED2E9C787D002E3C84 /* BreezyApp.swift */; };
+		18F426FC2E9C7B10002E3C84 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F426FB2E9C7B10002E3C84 /* SplashView.swift */; };
+		18F426FE2E9C7B44002E3C84 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F426FD2E9C7B44002E3C84 /* HomeView.swift */; };
+/* End PBXBuildFile section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		18F426E02E9C7830002E3C84 /* Breezy */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Breezy;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
+/* Begin PBXFileReference section */
+		18A13DC12E9D7A0E0013F7A4 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
+		18D4A2062E9D83D80042D0DE /* BaseApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseApiClient.swift; sourceTree = "<group>"; };
+		18D4A20C2E9D84FB0042D0DE /* ApiRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRouter.swift; sourceTree = "<group>"; };
+		18D4A20E2E9D86630042D0DE /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		18D4A2102E9D86B10042D0DE /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		18D4A2122E9D89890042D0DE /* Encodable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extensions.swift"; sourceTree = "<group>"; };
+		18D4A2142E9D89AD0042D0DE /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
+		18D4A2182E9D92E60042D0DE /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		18D4A21A2E9D951C0042D0DE /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
+		18D4A21C2E9D98B50042D0DE /* WeatherIntrector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIntrector.swift; sourceTree = "<group>"; };
+		18D4A21E2E9D9C610042D0DE /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
+		18D4A2202E9D9DA30042D0DE /* WeatherParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherParams.swift; sourceTree = "<group>"; };
+		18D4A2232E9DA6220042D0DE /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
+		18D4A2252E9DA6450042D0DE /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
+		18D4A22B2E9DA7CE0042D0DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18F426DE2E9C7830002E3C84 /* Breezy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Breezy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		18F426EC2E9C787D002E3C84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		18F426ED2E9C787D002E3C84 /* BreezyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreezyApp.swift; sourceTree = "<group>"; };
+		18F426FB2E9C7B10002E3C84 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		18F426FD2E9C7B44002E3C84 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		18F426DB2E9C7830002E3C84 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18D4A2032E9D82C80042D0DE /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18A13DB52E9D75470013F7A4 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		18A13DB62E9D75700013F7A4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				18D4A2122E9D89890042D0DE /* Encodable+Extensions.swift */,
+				18D4A2142E9D89AD0042D0DE /* Dictionary+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		18A13DB72E9D757C0013F7A4 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				18D4A2102E9D86B10042D0DE /* AppEnvironment.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		18A13DB82E9D758E0013F7A4 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		18A13DB92E9D75DC0013F7A4 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				18D4A20E2E9D86630042D0DE /* AppConstants.swift */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		18A13DBA2E9D75E20013F7A4 /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+				18A13DC02E9D79ED0013F7A4 /* Network */,
+				18A13DBF2E9D79DC0013F7A4 /* Service */,
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		18A13DBF2E9D79DC0013F7A4 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				18D4A2182E9D92E60042D0DE /* WeatherService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		18A13DC02E9D79ED0013F7A4 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				18A13DC12E9D7A0E0013F7A4 /* ApiError.swift */,
+				18D4A20C2E9D84FB0042D0DE /* ApiRouter.swift */,
+				18D4A2062E9D83D80042D0DE /* BaseApiClient.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		18D4A2222E9DA5D90042D0DE /* Schemes */ = {
+			isa = PBXGroup;
+			children = (
+				18D4A2232E9DA6220042D0DE /* Staging.xcconfig */,
+				18D4A2252E9DA6450042D0DE /* Production.xcconfig */,
+			);
+			path = Schemes;
+			sourceTree = "<group>";
+		};
 		18F426D52E9C7830002E3C84 = {
 			isa = PBXGroup;
 			children = (
-				18F426E02E9C7830002E3C84 /* Breezy */,
+				18F426F22E9C79F8002E3C84 /* Breezy */,
 				18F426DF2E9C7830002E3C84 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +152,93 @@
 				18F426DE2E9C7830002E3C84 /* Breezy.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		18F426F22E9C79F8002E3C84 /* Breezy */ = {
+			isa = PBXGroup;
+			children = (
+				18F426F32E9C7A27002E3C84 /* App */,
+				18F426F42E9C7A2F002E3C84 /* Core */,
+				18F426F52E9C7A39002E3C84 /* Data */,
+				18F426F62E9C7A75002E3C84 /* Features */,
+				18F426F82E9C7A98002E3C84 /* Shared */,
+				18F426F72E9C7A7E002E3C84 /* Resources */,
+			);
+			path = Breezy;
+			sourceTree = "<group>";
+		};
+		18F426F32E9C7A27002E3C84 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				18F426ED2E9C787D002E3C84 /* BreezyApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		18F426F42E9C7A2F002E3C84 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				18A13DB72E9D757C0013F7A4 /* Enums */,
+				18A13DB62E9D75700013F7A4 /* Extensions */,
+				18A13DB52E9D75470013F7A4 /* Helpers */,
+				18A13DB82E9D758E0013F7A4 /* Modifiers */,
+				18D4A2222E9DA5D90042D0DE /* Schemes */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		18F426F52E9C7A39002E3C84 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				18A13DB92E9D75DC0013F7A4 /* Local */,
+				18A13DBA2E9D75E20013F7A4 /* Remote */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		18F426F62E9C7A75002E3C84 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				18F426FA2E9C7AFD002E3C84 /* Onboarding */,
+				18F426F92E9C7AF6002E3C84 /* Home */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		18F426F72E9C7A7E002E3C84 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				18F426EC2E9C787D002E3C84 /* Assets.xcassets */,
+				18D4A22B2E9DA7CE0042D0DE /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		18F426F82E9C7A98002E3C84 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		18F426F92E9C7AF6002E3C84 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				18D4A21A2E9D951C0042D0DE /* WeatherResponse.swift */,
+				18F426FD2E9C7B44002E3C84 /* HomeView.swift */,
+				18D4A21C2E9D98B50042D0DE /* WeatherIntrector.swift */,
+				18D4A21E2E9D9C610042D0DE /* HomePresenter.swift */,
+				18D4A2202E9D9DA30042D0DE /* WeatherParams.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		18F426FA2E9C7AFD002E3C84 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				18F426FB2E9C7B10002E3C84 /* SplashView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -60,12 +256,7 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				18F426E02E9C7830002E3C84 /* Breezy */,
-			);
 			name = Breezy;
-			packageProductDependencies = (
-			);
 			productName = Breezy;
 			productReference = 18F426DE2E9C7830002E3C84 /* Breezy.app */;
 			productType = "com.apple.product-type.application";
@@ -94,6 +285,9 @@
 			);
 			mainGroup = 18F426D52E9C7830002E3C84;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				18D4A2012E9D82C80042D0DE /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 18F426DF2E9C7830002E3C84 /* Products */;
 			projectDirPath = "";
@@ -109,6 +303,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18D4A2242E9DA6220042D0DE /* Staging.xcconfig in Resources */,
+				18F426EF2E9C787D002E3C84 /* Assets.xcassets in Resources */,
+				18D4A2262E9DA6450042D0DE /* Production.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +316,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18D4A2072E9D83D80042D0DE /* BaseApiClient.swift in Sources */,
+				18D4A20D2E9D84FB0042D0DE /* ApiRouter.swift in Sources */,
+				18D4A2212E9D9DA30042D0DE /* WeatherParams.swift in Sources */,
+				18F426F02E9C787D002E3C84 /* BreezyApp.swift in Sources */,
+				18D4A21F2E9D9C610042D0DE /* HomePresenter.swift in Sources */,
+				18A13DC22E9D7A0E0013F7A4 /* ApiError.swift in Sources */,
+				18D4A2192E9D92E60042D0DE /* WeatherService.swift in Sources */,
+				18D4A2132E9D89890042D0DE /* Encodable+Extensions.swift in Sources */,
+				18D4A20F2E9D86630042D0DE /* AppConstants.swift in Sources */,
+				18D4A21B2E9D951C0042D0DE /* WeatherResponse.swift in Sources */,
+				18D4A2112E9D86B10042D0DE /* AppEnvironment.swift in Sources */,
+				18D4A2152E9D89AD0042D0DE /* Dictionary+Extensions.swift in Sources */,
+				18F426FE2E9C7B44002E3C84 /* HomeView.swift in Sources */,
+				18F426FC2E9C7B10002E3C84 /* SplashView.swift in Sources */,
+				18D4A21D2E9D98B50042D0DE /* WeatherIntrector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +390,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Breezy/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -236,6 +449,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Breezy/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -255,7 +469,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J8293UBW52;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "$(SRCROOT)/Breezy/Resources/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -293,7 +508,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J8293UBW52;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "$(SRCROOT)/Breezy/Resources/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -344,6 +560,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		18D4A2012E9D82C80042D0DE /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		18D4A2022E9D82C80042D0DE /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18D4A2012E9D82C80042D0DE /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 18F426D62E9C7830002E3C84 /* Project object */;
 }

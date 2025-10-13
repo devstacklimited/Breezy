@@ -1,0 +1,11 @@
+//
+//  Production.xcconfig
+//  Breezy
+//
+//  Created by Mian Usama on 14/10/2025.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+IS_PRODUCTION = YES
