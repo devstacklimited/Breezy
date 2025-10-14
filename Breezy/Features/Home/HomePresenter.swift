@@ -5,38 +5,46 @@
 //  Created by Mian Usama on 14/10/2025.
 //
 
+import Foundation
 import SwiftUI
 import Combine
-import Foundation
 
+/// Presenter for Home screen
+/// - Uses only `/weather` (current) and `/forecast` (5-day / 3-hour) endpoints.
+/// - Maps forecast list -> hourly (next 24h) and daily (group by date).
+@MainActor
 final class HomePresenter: ObservableObject {
-    /// Published properties bound to UI
-    @Published var city: String = "—"
-    @Published var temperature: String = "--°"
-    @Published var highLow: String = "-- / --"
-    @Published var condition: String = "—"
-    @Published var iconName: String = "cloud.fill" /// SF Symbol mapped later
-    @Published var hourly: [HourlyViewModel] = []
-    @Published var daily: [DailyViewModel] = []
+    // MARK: Published state for the UI
+    @Published var cities: [String] = []                         // list of saved city names
+    @Published var selectedCityIndex: Int = 0                    // currently visible city index
+    @Published var cityWeathers: [CityWeatherViewModel] = []     // cached weather per city
     @Published var isLoading: Bool = false
-    @Published var errorMessage: String?
+    @Published var errorMessage: String? = nil
 
     private let interactor: WeatherInteractorDelegate
-    private var refreshTimerTask: Task<Void, Never>? = nil
-    // store last coordinates to call onecall
-    private var lastCoord: Coord?
 
     init(interactor: WeatherInteractorDelegate){
         self.interactor = interactor
+        // Optionally: load persisted cities here (UserDefaults or local DB)
     }
 
-    // MARK: - ViewModels
+    // MARK: View models
+    struct CityWeatherViewModel: Identifiable {
+        let id = UUID()
+        let city: String
+        let temperature: String
+        let condition: String
+        let highLow: String
+        let iconName: String
+        let hourly: [HourlyViewModel]
+        let daily: [DailyViewModel]
+    }
+
     struct HourlyViewModel: Identifiable {
         let id = UUID()
         let hourLabel: String
         let temp: String
-        let icon: String
-        let pop: Double? /// precipitation probability
+        let iconName: String
     }
 
     struct DailyViewModel: Identifiable {
@@ -44,90 +52,162 @@ final class HomePresenter: ObservableObject {
         let dayLabel: String
         let min: String
         let max: String
-        let icon: String
-        let pop: Double?
+        let iconName: String
     }
 
-    // NOTE: coordinates or city - here we support both; for iOS Weather app you'd typically use location
-    func loadWeatherForCity(_ cityName: String) async {
+    // MARK: Public API
+
+    /// Add a city and load its weather (no duplicate cities allowed)
+    func addCity(_ city: String) async {
+        let normalized = city.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !normalized.isEmpty else { return }
+        guard !cities.contains(where: { $0.caseInsensitiveCompare(normalized) == .orderedSame }) else { return }
+
+        cities.append(normalized)
+        // Immediately load weather for the newly added city
+        await loadAndCacheWeatherForCity(normalized)
+        // Optionally persist `cities` to disk here
+    }
+
+    /// Load weather (current + forecast) for all saved cities (useful on app start)
+    func loadAllSavedCities() async {
+        guard !cities.isEmpty else { return }
         isLoading = true
-        errorMessage = nil
-        // 1) Current weather (by city name)
-        let currentParams: [String: Any] = [
-            "q": cityName,
-            "appid" : "37a84a979191d88254912348b8d7d339"
-        ] /// ApiRouter will append appid & units
-        do {
-            let current: Weather = try await interactor.loadWeather(currentParams)
-            mapCurrent(current)
-        } catch {
-            self.errorMessage = error.localizedDescription
-            self.isLoading = false
-            return
-        }
-        // 2) For hourly/daily prefer OneCall -> need lat/lon. get from current response if available
-        // If current didn't provide coords, you can geocode or fallback to city.
-        do {
-            // assume previous current mapping stored coord
-            guard let lat = lastCoord?.lat, let lon = lastCoord?.lon else {
-                self.isLoading = false
-                return
-            }
-            let onecallParams: [String: Any] = [
-                "lat": lat,
-                "lon": lon,
-                "exclude": "minutely,alerts",
-                "appid" : "37a84a979191d88254912348b8d7d339"
-            ]
-            let onecall: OneCall = try await interactor.loadOneCall(onecallParams)
-            mapOneCall(onecall)
-            /// start periodic refresh
-            startAutoRefresh(lat: lat, lon: lon)
-        } catch {
-            self.errorMessage = error.localizedDescription
-            print("error: \(error.localizedDescription)")
+        cityWeathers = []
+        for city in cities {
+            await loadAndCacheWeatherForCity(city)
         }
         isLoading = false
     }
 
-    // MARK: - Mapping helpers
-    private func mapCurrent(_ model: Weather){
-        self.city = model.name
-        self.temperature = model.main.temp.formattedTemperature()
-        self.condition = model.weather.first?.description.capitalized ?? ""
-        self.iconName = mapIconCodeToSFSymbol(model.weather.first?.icon ?? "")
-        self.lastCoord = model.coord
-        if let min = model.main.temp_min, let max = model.main.temp_max {
-            self.highLow = "\(Int(min))° / \(Int(max))°"
+    /// Load and cache (append or replace) CityWeatherViewModel for a city
+    func loadAndCacheWeatherForCity(_ cityName: String) async {
+        isLoading = true
+        errorMessage = nil
+
+        // 1) load current weather
+        let currentParams: [String: Any] = [
+            "q": cityName,
+            // you may prefer to centrally store key in AppConstants.Keys.apiKey
+            "appid": AppConstants.Keys.apiKey,
+            "units": "metric"
+        ]
+
+        do {
+            let current: Weather = try await interactor.loadWeather(currentParams)
+            // 2) load forecast (by city name or lat/lon)
+            // We'll use forecast by city name (q=...) to keep it simple and free
+            let forecastParams: [String: Any] = [
+                "q": cityName,
+                "appid": AppConstants.Keys.apiKey,
+                "units": "metric"
+            ]
+            let forecast: Forecast = try await interactor.loadForecast(forecastParams)
+            // map to view model
+            let vm = mapToCityWeatherVM(city: cityName, current: current, forecast: forecast)
+            // store into cityWeathers: replace if exists, otherwise append
+            if let idx = cityWeathers.firstIndex(where: { $0.city.caseInsensitiveCompare(cityName) == .orderedSame }){
+                cityWeathers[idx] = vm
+            } else {
+                cityWeathers.append(vm)
+            }
+        } catch {
+            // capture error for UI; don't crash on single city failure
+            errorMessage = error.localizedDescription
+            print("HomePresenter.loadAndCacheWeatherForCity error: \(error)")
         }
+
+        isLoading = false
     }
 
-    private func mapOneCall(_ model: OneCall){
-        // Hourly: next 24 hours
-        self.hourly = model.hourly.prefix(24).map { h in
-            let date = Date(timeIntervalSince1970: TimeInterval(h.dt))
-            let hourLabel = date.hourString()
-            return HourlyViewModel(hourLabel: hourLabel,
-                                   temp: Int(h.temp).description + "°",
-                                   icon: mapIconCodeToSFSymbol(h.weather.first?.icon ?? ""),
-                                   pop: h.pop)
-        }
-        // Daily: next 7 days
-        self.daily = model.daily.map { d in
-            let date = Date(timeIntervalSince1970: TimeInterval(d.dt))
-            return DailyViewModel(dayLabel: date.weekdayString(),
-                                   min: Int(d.temp.min).description + "°",
-                                   max: Int(d.temp.max).description + "°",
-                                   icon: mapIconCodeToSFSymbol(d.weather.first?.icon ?? ""),
-                                   pop: d.pop)
-        }
-        // update header current values from onecall.current
-        self.temperature = Int(model.current.temp).description + "°"
-        self.condition = model.current.weather.first?.description.capitalized ?? ""
-        self.iconName = mapIconCodeToSFSymbol(model.current.weather.first?.icon ?? "")
+    /// Refresh currently selected city
+    func refreshSelectedCity() async {
+        guard cities.indices.contains(selectedCityIndex) else { return }
+        let city = cities[selectedCityIndex]
+        await loadAndCacheWeatherForCity(city)
     }
 
-    // convert OWM icon code -> SF Symbol mapping (simple)
+    // MARK: Mapping helpers (forecast -> hourly/daily)
+
+    /// Map current + forecast to CityWeatherViewModel (uses only forecast data; no OneCall)
+    private func mapToCityWeatherVM(city: String, current: Weather, forecast: Forecast) -> CityWeatherViewModel {
+        // Hourly: take next 8 items (~24 hours because forecast items are 3-hour steps => 8 * 3 = 24)
+        let hourlyItems = Array(forecast.list.prefix(8))
+        let hourlyVMs: [HourlyViewModel] = hourlyItems.map { item in
+            let date = Date(timeIntervalSince1970: TimeInterval(item.dt))
+            return HourlyViewModel(
+                hourLabel: hourLabel(for: date),
+                temp: "\(Int(item.main.temp))°",
+                iconName: mapIconCodeToSFSymbol(item.weather.first?.icon ?? "")
+            )
+        }
+
+        // Daily: group forecast items by calendar day, compute min/max per day
+        let grouped = Dictionary(grouping: forecast.list) { (item: ForecastItem) -> Date in
+            let date = Date(timeIntervalSince1970: TimeInterval(item.dt))
+            return calendarStartOfDay(for: date)
+        }
+
+        // Sort days ascending and pick up to 7 days (or available)
+        let sortedDayKeys = grouped.keys.sorted()
+        let dailyVMs: [DailyViewModel] = sortedDayKeys.prefix(7).map { day in
+            let items = grouped[day] ?? []
+            let minTemp = items.map { $0.main.tempMin }.min() ?? 0
+            let maxTemp = items.map { $0.main.tempMax }.max() ?? 0
+            // choose an icon from the middle of the day items if available
+            let icon = items.first?.weather.first?.icon ?? ""
+            return DailyViewModel(
+                dayLabel: dayLabel(for: day),
+                min: "\(Int(minTemp))°",
+                max: "\(Int(maxTemp))°",
+                iconName: mapIconCodeToSFSymbol(icon)
+            )
+        }
+
+        // header values prefer current temp but ensure we have fallback from forecast first item
+        let headerTemp = current.main.temp.formattedTemperature()
+        let headerCondition = current.weather.first?.description.capitalized ?? (forecast.list.first?.weather.first?.description.capitalized ?? "—")
+        let headerIcon = mapIconCodeToSFSymbol(current.weather.first?.icon ?? (forecast.list.first?.weather.first?.icon ?? ""))
+
+        let highLow = {
+            if let min = current.main.temp_min, let max = current.main.temp_max {
+                return "\(Int(min))° / \(Int(max))°"
+            } else if let first = forecast.list.first {
+                return "\(Int(first.main.tempMin))° / \(Int(first.main.tempMax))°"
+            } else {
+                return "-- / --"
+            }
+        }()
+
+        return CityWeatherViewModel(
+            city: city,
+            temperature: headerTemp,
+            condition: headerCondition,
+            highLow: highLow,
+            iconName: headerIcon,
+            hourly: hourlyVMs,
+            daily: dailyVMs
+        )
+    }
+
+    // MARK: Simple date helpers
+    private func hourLabel(for date: Date) -> String {
+        let df = DateFormatter()
+        df.dateFormat = "ha"         // e.g., 4PM
+        return df.string(from: date)
+    }
+
+    private func dayLabel(for date: Date) -> String {
+        let df = DateFormatter()
+        df.dateFormat = "EEE"        // Mon, Tue
+        return df.string(from: date)
+    }
+
+    private func calendarStartOfDay(for date: Date) -> Date {
+        Calendar.current.startOfDay(for: date)
+    }
+
+    // MARK: Icon mapping
     private func mapIconCodeToSFSymbol(_ code: String) -> String {
         switch code {
         case "01d": return "sun.max.fill"
@@ -142,45 +222,5 @@ final class HomePresenter: ObservableObject {
         case "50d", "50n": return "cloud.fog.fill"
         default: return "cloud.fill"
         }
-    }
-
-    // MARK: - Auto refresh
-    private func startAutoRefresh(lat: Double, lon: Double){
-        // cancel previous
-        refreshTimerTask?.cancel()
-        refreshTimerTask = Task.detached {[weak self] in
-            guard let self = self else { return }
-            while !Task.isCancelled {
-                try? await Task.sleep(nanoseconds: 60 * 1_000_000_000) /// refresh every 60s (adjust as needed)
-                Task {
-                    do {
-                        let params: [String: Any] = [
-                            "lat": lat,
-                            "lon": lon,
-                            "appid" : "37a84a979191d88254912348b8d7d339",
-                            "exclude": "minutely,alerts"
-                        ]
-                        let onecall: OneCall = try await self.interactor.loadOneCall(params)
-                        await self.mapOneCall(onecall)
-                    } catch {
-                        /// ignore transient errors
-                        print("Error fetching weather data: \(error.localizedDescription)")
-                    }
-                }
-            }
-        }
-    }
-
-    func stopAutoRefresh() {
-        refreshTimerTask?.cancel()
-        refreshTimerTask = nil
-    }
-
-    // Simple date helpers (can be moved to extension)
-    private func formattedHour(from unix: Int) -> String {
-        let date = Date(timeIntervalSince1970: TimeInterval(unix))
-        let df = DateFormatter()
-        df.dateFormat = "ha"
-        return df.string(from: date)
     }
 }
