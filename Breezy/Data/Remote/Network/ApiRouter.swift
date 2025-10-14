@@ -29,6 +29,8 @@ enum ApiRouter: URLRequestConvertible {
     /// These parameters will be turned into a query string and appended to the endpoint.
     ///
     case loadWeather(_ p: Parameters)
+    case loadOneCall(_ p: Parameters)
+    case loadForecast(_ p: Parameters)
     
     // MARK: - Convert to URLRequest
     /// This function builds a complete `URLRequest` that Alamofire can use.
@@ -89,6 +91,10 @@ enum ApiRouter: URLRequestConvertible {
         switch self {
         case .loadWeather(let p):
             return "weather?" + p.queryString
+        case .loadOneCall(let p):
+            return "onecall?" + p.queryString
+        case .loadForecast(let p):
+            return "forecast?" + p.queryString
         }
     }
     
@@ -96,7 +102,7 @@ enum ApiRouter: URLRequestConvertible {
     /// Defines the HTTP method for each API call.
     private var method: HTTPMethod {
         switch self {
-        case .loadWeather:
+        case .loadWeather, .loadOneCall, .loadForecast:
             return .get
         }
     }
@@ -110,7 +116,7 @@ enum ApiRouter: URLRequestConvertible {
     ///   and they would be encoded into the request body.
     private var parameters: Parameters? {
         switch self {
-        case .loadWeather:
+        case .loadWeather, .loadOneCall, .loadForecast:
             return nil
         }
     }

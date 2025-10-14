@@ -18,7 +18,9 @@ protocol WeatherInteractorDelegate: AnyObject {
     /// Fetch current weather based on query parameters.
     /// - Parameter params: Encodable query model wrapped in `AnyEncodable`.
     /// - Returns: `WeatherResponse` decoded model.
-    func loadWeather(_ params: [String: Any]) async throws -> WeatherResponse
+    func loadWeather(_ params: [String: Any]) async throws -> Weather
+    func loadForecast(_ params: [String: Any]) async throws -> Forecast
+    func loadOneCall(_ params: [String: Any]) async throws -> OneCall
 }
 
 // MARK: - Weather Interactor
@@ -40,7 +42,15 @@ final class WeatherInteractor: WeatherInteractorDelegate {
     
     // MARK: - Public API
     /// Fetch current weather by delegating to the service layer.
-    func loadWeather(_ params: [String: Any]) async throws -> WeatherResponse {
+    func loadWeather(_ params: [String: Any]) async throws -> Weather {
         return try await service.loadWeather(params)
+    }
+    
+    func loadForecast(_ params: [String : Any]) async throws -> Forecast {
+        return try await service.loadForecast(params)
+    }
+    
+    func loadOneCall(_ params: [String : Any]) async throws -> OneCall {
+        return try await service.loadOneCall(params)
     }
 }

@@ -21,7 +21,9 @@ protocol WeatherServiceDelegate: AnyObject {
     /// Fetch current weather by city name
     /// - Parameter params: Encodable model with query parameters
     /// - Returns: `WeatherResponse` decoded model
-    func loadWeather(_ params: Parameters) async throws -> WeatherResponse
+    func loadWeather(_ params: Parameters) async throws -> Weather
+    func loadForecast(_ params: Parameters) async throws -> Forecast
+    func loadOneCall(_ params: Parameters) async throws -> OneCall
 }
 
 // MARK: - Weather Service
@@ -48,7 +50,15 @@ final class WeatherService: WeatherServiceDelegate {
     /// Fetch current weather by city name
     /// - Parameter params: Encodable model with query parameters
     /// - Returns: `WeatherResponse` decoded model
-    func loadWeather(_ params: Parameters) async throws -> WeatherResponse {
+    func loadWeather(_ params: Parameters) async throws -> Weather {
         return try await service.request(ApiRouter.loadWeather(params))
+    }
+    
+    func loadForecast(_ params: Parameters) async throws -> Forecast {
+        return try await service.request(ApiRouter.loadForecast(params))
+    }
+    
+    func loadOneCall(_ params: Parameters) async throws -> OneCall {
+        return try await service.request(ApiRouter.loadOneCall(params))
     }
 }
