@@ -53,7 +53,7 @@ final class BaseApiClient: ApiClientProtocol {
             /// Fire the request using Alamofire session
             let dataResponse = await session
                 .request(convertible)
-                .validate(statusCode: 200..<300) // ensures only 2xx responses are considered valid
+                .validate(statusCode: 200..<300) /// ensures only 2xx responses are considered valid
                 .serializingData()
                 .response
             
@@ -66,8 +66,13 @@ final class BaseApiClient: ApiClientProtocol {
                 throw ApiError(message: "No response data", statusCode: httpResponse.statusCode)
             }
             /// Debug logging: print full raw JSON response (pretty-printed if possible)
-            logResponse(data: data, statusCode: httpResponse.statusCode, isError: !(200..<300).contains(httpResponse.statusCode))
-            
+            let requestURL = dataResponse.request?.url?.absoluteString ?? "<Unknown URL>"
+            logResponse(
+                data: data,
+                statusCode: httpResponse.statusCode,
+                url: requestURL,
+                isError: !(200..<300).contains(httpResponse.statusCode)
+            )
             /// If the status code is outside 2xx range, attempt to extract error message
             if !(200..<300).contains(httpResponse.statusCode){
                 let serverMessage = extractErrorMessage(from: data) ?? "HTTP Error - Status Code: \(httpResponse.statusCode)"
@@ -122,13 +127,16 @@ final class BaseApiClient: ApiClientProtocol {
         return String(data: data, encoding: .utf8) ?? "<Non-JSON response>"
     }
     
-    /// Logs responses (success or error) with formatted JSON.
-    private func logResponse(data: Data, statusCode: Int, isError: Bool){
+    /// Logs responses (success or error) with formatted JSON and request URL.
+    private func logResponse(data: Data, statusCode: Int, url: String, isError: Bool){
         let formattedJSON = prettyJSONString(from: data)
         let header = isError ? "❌ ERROR Response" : "✅ SUCCESS Response"
         print("""
         ===========================
-        \(header) [Status: \(statusCode)]
+        \(header)
+        URL: \(url)
+        Status: \(statusCode)
+        Response:
         \(formattedJSON)
         ===========================
         """)
