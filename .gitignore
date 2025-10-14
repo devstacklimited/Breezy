@@ -1,0 +1,40 @@
+### macOS ###
+# General
+*.DS_Store
+
+## User settings
+xcuserdata/
+*.xcuserstate
+
+## Obj-C/Swift specific
+*.hmap
+
+## App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Xcode project files (keep project.pbxproj, ignore user-specific)
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcbkptlist   # Breakpoints
+
+## Derived Data
+DerivedData/
+
+# Swift Package Manager
+.build/
+# Ignore resolved file (can be committed if you want reproducible builds across machines)
+*.xcworkspace/xcshareddata/swiftpm/Package.resolved
+
+# CocoaPods
+# We recommend against adding the Pods directory to your .gitignore.
+# However you should judge for yourself:
+# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
+# Pods/
+# *.xcworkspace
+
+# Carthage
+# Carthage/Build/
