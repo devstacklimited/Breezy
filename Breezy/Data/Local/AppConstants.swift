@@ -44,6 +44,10 @@ struct AppConstants {
         }
     }
     
+    struct Keys {
+        static var apiKey = "37a84a979191d88254912348b8d7d339"
+    }
+    
     enum HttpHeaderField: String {
         case contentType = "Content-Type"
         case acceptType = "Accept"

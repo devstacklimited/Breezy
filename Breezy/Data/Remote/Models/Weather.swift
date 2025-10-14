@@ -7,9 +7,9 @@
 
 import Foundation
 // MARK: - WeatherResponse
-struct WeatherResponse: Codable {
+struct Weather: Codable {
     let coord: Coord
-    let weather: [Weather]
+    let weather: [WeatherResponse]
     let base: String?
     let main: Main
     let visibility: Int?
@@ -30,7 +30,7 @@ struct Coord: Codable {
     let lat: Double
 }
 
-struct Weather: Codable {
+struct WeatherResponse: Codable {
     let id: Int
     let main: String
     let description: String
