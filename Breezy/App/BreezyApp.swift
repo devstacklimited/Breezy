@@ -16,4 +16,8 @@ struct BreezyApp: App {
             }
         }
     }
+    
+    init(){
+        SecretsManager()
+    }
 }

@@ -82,10 +82,10 @@ final class HomePresenter: ObservableObject {
     func loadAndCacheWeatherForCity(_ cityName: String) async {
         isLoading = true
         errorMessage = nil
-
+        let apiKey = SecretsManager.shared.credentials?.appid ?? ""
         let currentParams = [
             "q": cityName,
-            "appid": AppConstants.Keys.apiKey,
+            "appid": apiKey,
             "units": "metric"
         ]
 
@@ -93,14 +93,12 @@ final class HomePresenter: ObservableObject {
             let current: Weather = try await interactor.loadWeather(currentParams)
             let forecastParams = [
                 "q": cityName,
-                "appid": AppConstants.Keys.apiKey,
+                "appid": apiKey,
                 "units": "metric"
             ]
             let forecast: Forecast = try await interactor.loadForecast(forecastParams)
-
             let vm = mapToCityWeatherVM(city: cityName, current: current, forecast: forecast)
-
-            if let idx = cityWeathers.firstIndex(where: { $0.city.caseInsensitiveCompare(cityName) == .orderedSame }) {
+            if let idx = cityWeathers.firstIndex(where: { $0.city.caseInsensitiveCompare(cityName) == .orderedSame }){
                 cityWeathers[idx] = vm
             } else {
                 cityWeathers.append(vm)

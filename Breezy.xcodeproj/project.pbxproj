@@ -26,6 +26,13 @@
 		18D4A2212E9D9DA30042D0DE /* WeatherParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4A2202E9D9DA30042D0DE /* WeatherParams.swift */; };
 		18D4A2242E9DA6220042D0DE /* Staging.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 18D4A2232E9DA6220042D0DE /* Staging.xcconfig */; };
 		18D4A2262E9DA6450042D0DE /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 18D4A2252E9DA6450042D0DE /* Production.xcconfig */; };
+		18EE81082EA03B1C009D3E0B /* AppCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE81072EA03B1C009D3E0B /* AppCache.swift */; };
+		18EE810A2EA03B97009D3E0B /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE81092EA03B97009D3E0B /* Keys.swift */; };
+		18EE810C2EA03C91009D3E0B /* HideKeyboardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE810B2EA03C91009D3E0B /* HideKeyboardModifier.swift */; };
+		18EE81142EA03E67009D3E0B /* SecretsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE81132EA03E67009D3E0B /* SecretsManager.swift */; };
+		18EE81172EA042FC009D3E0B /* SessionFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE81162EA042FC009D3E0B /* SessionFlow.swift */; };
+		18EE81192EA0442E009D3E0B /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE81182EA0442E009D3E0B /* AppRouter.swift */; };
+		18EE811B2EA0445A009D3E0B /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE811A2EA0445A009D3E0B /* AppRoute.swift */; };
 		18F426EF2E9C787D002E3C84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18F426EC2E9C787D002E3C84 /* Assets.xcassets */; };
 		18F426F02E9C787D002E3C84 /* BreezyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F426ED2E9C787D002E3C84 /* BreezyApp.swift */; };
 		18F426FC2E9C7B10002E3C84 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F426FB2E9C7B10002E3C84 /* SplashView.swift */; };
@@ -52,6 +59,13 @@
 		18D4A2232E9DA6220042D0DE /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		18D4A2252E9DA6450042D0DE /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		18D4A22B2E9DA7CE0042D0DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18EE81072EA03B1C009D3E0B /* AppCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCache.swift; sourceTree = "<group>"; };
+		18EE81092EA03B97009D3E0B /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
+		18EE810B2EA03C91009D3E0B /* HideKeyboardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardModifier.swift; sourceTree = "<group>"; };
+		18EE81132EA03E67009D3E0B /* SecretsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretsManager.swift; sourceTree = "<group>"; };
+		18EE81162EA042FC009D3E0B /* SessionFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFlow.swift; sourceTree = "<group>"; };
+		18EE81182EA0442E009D3E0B /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		18EE811A2EA0445A009D3E0B /* AppRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoute.swift; sourceTree = "<group>"; };
 		18F426DE2E9C7830002E3C84 /* Breezy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Breezy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18F426EC2E9C787D002E3C84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18F426ED2E9C787D002E3C84 /* BreezyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreezyApp.swift; sourceTree = "<group>"; };
@@ -92,6 +106,8 @@
 		18A13DB52E9D75470013F7A4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				18EE810E2EA03D5C009D3E0B /* Keychain */,
+				18EE810D2EA03D54009D3E0B /* Cache */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -111,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				18D4A2102E9D86B10042D0DE /* AppEnvironment.swift */,
+				18EE811A2EA0445A009D3E0B /* AppRoute.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -118,6 +135,7 @@
 		18A13DB82E9D758E0013F7A4 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				18EE810B2EA03C91009D3E0B /* HideKeyboardModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -126,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				18D4A20E2E9D86630042D0DE /* AppConstants.swift */,
+				18EE81092EA03B97009D3E0B /* Keys.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -166,6 +185,30 @@
 				18D4A2252E9DA6450042D0DE /* Production.xcconfig */,
 			);
 			path = Schemes;
+			sourceTree = "<group>";
+		};
+		18EE810D2EA03D54009D3E0B /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				18EE81072EA03B1C009D3E0B /* AppCache.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		18EE810E2EA03D5C009D3E0B /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				18EE81132EA03E67009D3E0B /* SecretsManager.swift */,
+			);
+			path = Keychain;
+			sourceTree = "<group>";
+		};
+		18EE81152EA042E8009D3E0B /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				18EE81162EA042FC009D3E0B /* SessionFlow.swift */,
+			);
+			path = Session;
 			sourceTree = "<group>";
 		};
 		18F426D52E9C7830002E3C84 = {
@@ -247,6 +290,7 @@
 		18F426F82E9C7A98002E3C84 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				18EE81152EA042E8009D3E0B /* Session */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -265,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				18F426FB2E9C7B10002E3C84 /* SplashView.swift */,
+				18EE81182EA0442E009D3E0B /* AppRouter.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -344,25 +389,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18EE81172EA042FC009D3E0B /* SessionFlow.swift in Sources */,
 				182B965F2E9EC65F00CF7E35 /* Forecast.swift in Sources */,
 				18D4A2072E9D83D80042D0DE /* BaseApiClient.swift in Sources */,
 				18D4A20D2E9D84FB0042D0DE /* ApiRouter.swift in Sources */,
 				18D4A2212E9D9DA30042D0DE /* WeatherParams.swift in Sources */,
+				18EE810A2EA03B97009D3E0B /* Keys.swift in Sources */,
 				18F426F02E9C787D002E3C84 /* BreezyApp.swift in Sources */,
 				18D4A21F2E9D9C610042D0DE /* HomePresenter.swift in Sources */,
 				18A13DC22E9D7A0E0013F7A4 /* ApiError.swift in Sources */,
 				18D4A2192E9D92E60042D0DE /* WeatherService.swift in Sources */,
 				18D4A2132E9D89890042D0DE /* Encodable+Extensions.swift in Sources */,
+				18EE811B2EA0445A009D3E0B /* AppRoute.swift in Sources */,
 				182B96692E9ED09300CF7E35 /* Date+Extensions.swift in Sources */,
+				18EE81142EA03E67009D3E0B /* SecretsManager.swift in Sources */,
+				18EE81082EA03B1C009D3E0B /* AppCache.swift in Sources */,
 				18D4A20F2E9D86630042D0DE /* AppConstants.swift in Sources */,
 				18D4A21B2E9D951C0042D0DE /* Weather.swift in Sources */,
 				18D4A2112E9D86B10042D0DE /* AppEnvironment.swift in Sources */,
 				182B96672E9ED05C00CF7E35 /* Double+Extensions.swift in Sources */,
+				18EE81192EA0442E009D3E0B /* AppRouter.swift in Sources */,
 				18D4A2152E9D89AD0042D0DE /* Dictionary+Extensions.swift in Sources */,
 				18F426FE2E9C7B44002E3C84 /* HomeView.swift in Sources */,
 				182B96622E9EC7A200CF7E35 /* OneCall.swift in Sources */,
 				18F426FC2E9C7B10002E3C84 /* SplashView.swift in Sources */,
 				18D4A21D2E9D98B50042D0DE /* WeatherIntrector.swift in Sources */,
+				18EE810C2EA03C91009D3E0B /* HideKeyboardModifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

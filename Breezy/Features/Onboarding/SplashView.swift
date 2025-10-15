@@ -7,7 +7,9 @@
 
 import SwiftUI
 
+@available(iOS 26.0, *)
 struct SplashView: View {
+    let router: AppRouter
     @State private var isActive: Bool = false
     @State private var scale: CGFloat = 0.6
     @State private var opacity: Double = 0.3
