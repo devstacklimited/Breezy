@@ -19,7 +19,7 @@ struct SessionFlow: View {
                     case .home:
                         HomeView()
                     case .cities:
-                        CityManagerView(presenter: <#T##HomePresenter#>, onDone: <#T##() -> Void#>)
+                        CityManagerView(){}
                     }
                 }
         }

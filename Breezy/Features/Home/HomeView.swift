@@ -252,7 +252,7 @@ private struct EmptyStateView: View {
 /// Accepts the presenter as an ObservedObject so the UI can add/delete cities
 struct CityManagerView: View {
     @Environment(\.dismiss) private var dismiss
-    @ObservedObject var presenter: HomePresenter
+    @StateObject var presenter = HomePresenter(interactor: WeatherInteractor(service: WeatherService.shared))
     @State private var newCity: String = ""
     var onDone: () -> Void
 

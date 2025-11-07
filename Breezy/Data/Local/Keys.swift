@@ -10,6 +10,6 @@ import Foundation
 struct Keys {
     //MARK: - AppCache Keys
     struct AppCache {
-        static let cities = "UserSeletecCitiesKey"
+        static let cities = "UserSelectedCitiesKey"
     }
 }

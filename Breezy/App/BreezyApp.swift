@@ -7,13 +7,12 @@
 
 import SwiftUI
 
+@available(iOS 26.0, *)
 @main
 struct BreezyApp: App {
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                SplashView()
-            }
+            SessionFlow()
         }
     }
     
