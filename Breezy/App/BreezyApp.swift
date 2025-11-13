@@ -10,10 +10,13 @@ import SwiftUI
 @available(iOS 26.0, *)
 @main
 struct BreezyApp: App {
+    @StateObject private var sessionManager = AppSessionManager()
+    
     var body: some Scene {
         WindowGroup {
-            SessionFlow()
+            SessionView()
         }
+        .environmentObject(sessionManager)
     }
     
     init(){

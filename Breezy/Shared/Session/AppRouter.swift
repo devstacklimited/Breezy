@@ -5,11 +5,8 @@
 //  Created by Mian Usama on 16/10/2025.
 //
 
-import Foundation
-
 import SwiftUI
 
-@available(iOS 26.0, *)
 final class AppRouter {
     @Binding var path: NavigationPath
 

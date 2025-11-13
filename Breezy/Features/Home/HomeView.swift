@@ -12,6 +12,8 @@ import SwiftUI
 /// - Displays a paging city view when cities are present (swipe between them)
 /// - Presents a full-screen CityManager for adding/removing cities
 struct HomeView: View {
+    let router: AppRouter
+    
     @StateObject private var presenter = HomePresenter(interactor: WeatherInteractor(service: WeatherService.shared))
     @State private var showCityManager = false
 

@@ -8,6 +8,9 @@
 import Foundation
 
 enum AppRoute: Hashable {
-    case home
     case cities
+}
+
+enum SplashRoute: Hashable {
+    case locationPermission
 }
