@@ -12,82 +12,84 @@ import SwiftUI
 /// - Displays a paging city view when cities are present (swipe between them)
 /// - Presents a full-screen CityManager for adding/removing cities
 struct HomeView: View {
+    let router: AppRouter
+    
     @StateObject private var presenter = HomePresenter(interactor: WeatherInteractor(service: WeatherService.shared))
     @State private var showCityManager = false
+    @EnvironmentObject var sessionManager: AppSessionManager
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                // Background gradient (dynamic later based on condition)
-                backgroundGradient()
-                    .ignoresSafeArea()
-
-                // Loading / Error states
-                if presenter.isLoading && presenter.cityWeathers.isEmpty {
-                    ProgressView("Loading...")
-                        .foregroundColor(.white)
-                } else if let error = presenter.errorMessage, presenter.cityWeathers.isEmpty {
-                    // Show error only when there is no data; otherwise show cached data
-                    VStack(spacing: 12) {
-                        Text(error)
-                            .foregroundColor(.red)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                        Button("Try Add City") { showCityManager = true }
-                            .buttonStyle(PrimaryGlassButtonStyle())
-                    }
-                } else if presenter.cityWeathers.isEmpty {
-                    // EMPTY STATE: centered CTA when no cities added
-                    EmptyStateView {
+        ZStack {
+            // Background gradient (dynamic later based on condition)
+            Color.backgroundGradient
+                .ignoresSafeArea()
+            
+            // Loading / Error states
+            if presenter.isLoading && presenter.cityWeathers.isEmpty {
+                ProgressView("Loading...")
+                    .foregroundColor(.white)
+            } else if let error = presenter.errorMessage, presenter.cityWeathers.isEmpty {
+                // Show error only when there is no data; otherwise show cached data
+                VStack(spacing: 12){
+                    Text(error)
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                    Button("Try Add City"){
                         showCityManager = true
                     }
-                } else {
-                    // MAIN CONTENT: paged cities
-                    VStack(spacing: 8) {
-                        // Top header (city + temp for currently selected city)
-                        headerBar()
-                            .padding(.horizontal)
-
-                        // Paged city views (like Apple Weather)
-                        TabView(selection: $presenter.selectedCityIndex) {
-                            ForEach(Array(presenter.cityWeathers.enumerated()), id: \.offset){ index, vm in
-                                CityContentView(vm: vm)
-                                    .tag(index)
-                                    .padding(.horizontal)
-                            }
+                    .buttonStyle(PrimaryGlassButtonStyle())
+                }
+            } else {
+                // MAIN CONTENT: paged cities
+                VStack(spacing: 8){
+                    // Top header (city + temp for currently selected city)
+                    headerBar()
+                        .padding(.horizontal)
+                    
+                    // Paged city views (like Apple Weather)
+                    TabView(selection: $presenter.selectedCityIndex){
+                        ForEach(Array(presenter.cityWeathers.enumerated()), id: \.offset){ index, vm in
+                            CityContentView(vm: vm)
+                                .tag(index)
+                                .padding(.horizontal)
                         }
-                        .tabViewStyle(.page(indexDisplayMode: .always))
-                        .indexViewStyle(.page(backgroundDisplayMode: .always))
-
-                        // Manage button below content (non-floating)
-                        Button {
-                            showCityManager = true
-                        } label: {
-                            Label("Manage Cities", systemImage: "list.bullet")
-                                .font(.subheadline.weight(.medium))
-                                .foregroundColor(.white)
-                                .padding(.vertical, 10)
-                                .padding(.horizontal, 22)
-                                .background(.ultraThinMaterial)
-                                .cornerRadius(12)
-                                .shadow(radius: 2, y: 1)
-                        }
-                        .padding(.bottom, 12)
                     }
-                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+                    .tabViewStyle(.page(indexDisplayMode: .always))
+                    .indexViewStyle(.page(backgroundDisplayMode: .always))
+                    
+                    // Manage button below content (non-floating)
+                    Button {
+                        showCityManager = true
+                    } label: {
+                        Label("Manage Cities", systemImage: "list.bullet")
+                            .font(.subheadline.weight(.medium))
+                            .foregroundColor(.white)
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 22)
+                            .background(.ultraThinMaterial)
+                            .cornerRadius(12)
+                            .shadow(radius: 2, y: 1)
+                    }
+                    .padding(.bottom, 12)
                 }
-            } // ZStack
-            .navigationTitle("Breezy")
-            .navigationBarTitleDisplayMode(.inline)
-            // present the city manager full screen (not sheet)
-            .fullScreenCover(isPresented: $showCityManager) {
-                CityManagerView(presenter: presenter) {
-                    showCityManager = false
-                }
+                .transition(.opacity.combined(with: .move(edge: .bottom)))
             }
-            .task {
-                // load saved cities (presenter handles nothing change)
-                await presenter.loadAllSavedCities()
+        }
+        // present the city manager full screen (not sheet)
+        .fullScreenCover(isPresented: $showCityManager){
+            CityManagerView(presenter: presenter){
+                showCityManager = false
+            }
+        }
+        .task {
+            // load saved cities (presenter handles nothing change)
+            await presenter.loadAllSavedCities()
+        }
+        .onReceive(sessionManager.$userCity){ city in
+            // Only called when userCity is not nil
+            if let city = city, !presenter.cities.contains(city){
+                presenter.cities.append(city)
             }
         }
     }
@@ -95,14 +97,14 @@ struct HomeView: View {
     // MARK: Header bar — shows name + temperature for selected city
     @ViewBuilder
     private func headerBar() -> some View {
-        if let vm = currentCityVM() {
-            VStack(spacing: 8) {
+        if let vm = currentCityVM(){
+            VStack(spacing: 8){
                 Text(vm.city.uppercased())
                     .font(.caption)
                     .foregroundColor(.white.opacity(0.85))
 
-                HStack(alignment: .center, spacing: 16) {
-                    VStack(alignment: .leading, spacing: 6) {
+                HStack(alignment: .center, spacing: 16){
+                    VStack(alignment: .leading, spacing: 6){
                         Text(vm.temperature)
                             .font(.system(size: 48, weight: .bold))
                             .foregroundColor(.white)
@@ -214,45 +216,11 @@ private struct CityContentView: View {
     }
 }
 
-// MARK: - Empty State View (centered CTA)
-private struct EmptyStateView: View {
-    var onAddTapped: () -> Void
-
-    var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "cloud.sun.fill")
-                .font(.system(size: 72))
-                .foregroundStyle(.white.opacity(0.9))
-                .padding(.bottom, 6)
-
-            Text("No Cities Added")
-                .font(.title2.weight(.semibold))
-                .foregroundColor(.white)
-
-            Text("Add a city or use your location to see weather forecasts.")
-                .multilineTextAlignment(.center)
-                .foregroundColor(.white.opacity(0.8))
-                .padding(.horizontal, 40)
-
-            Button(action: onAddTapped) {
-                Label("Add City or Use Location", systemImage: "plus.circle.fill")
-                    .font(.headline.weight(.semibold))
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(.ultraThinMaterial)
-                    .cornerRadius(14)
-                    .padding(.horizontal, 60)
-            }
-        }
-    }
-}
-
 // MARK: - Full screen City Manager
 /// Accepts the presenter as an ObservedObject so the UI can add/delete cities
 struct CityManagerView: View {
     @Environment(\.dismiss) private var dismiss
-    @ObservedObject var presenter: HomePresenter
+    @StateObject var presenter = HomePresenter(interactor: WeatherInteractor(service: WeatherService.shared))
     @State private var newCity: String = ""
     var onDone: () -> Void
 
@@ -368,3 +336,4 @@ private struct PrimaryGlassButtonStyle: ButtonStyle {
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
     }
 }
+
