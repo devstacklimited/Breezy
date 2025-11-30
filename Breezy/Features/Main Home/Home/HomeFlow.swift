@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 26.0, *)
 struct HomeFlow: View {
     @State private var path = NavigationPath()
     
@@ -16,7 +17,7 @@ struct HomeFlow: View {
                 .navigationDestination(for: AppRoute.self){ route in
                     switch route {
                     case .cities:
-                        CityManagerView(){}
+                        EmptyView()
                     }
                 }
         }

