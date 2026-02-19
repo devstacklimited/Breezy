@@ -13,15 +13,14 @@ struct CityWeatherView: View {
 
     var body: some View {
         ScrollView(showsIndicators: false){
-            VStack(alignment: .center, spacing: 10){
+            VStack(alignment: .leading, spacing: 10){
                 VStack(spacing: 5){
-                    Text("MY LOCATION")
-                        .poppinFont(.regular, 14)
-                        .foregroundColor(.white)
-                        .padding(.top, 20)
-                    
                     Text(vm.city)
-                        .poppinFont(.semibold, 20)
+                        .poppinFont(.bold, 20)
+                        .foregroundColor(.white)
+                    
+                    Text("Mon, Oct 25")
+                        .poppinFont(.regular, 16)
                         .foregroundColor(.white)
                     
                     VStack(spacing: 5){
@@ -52,6 +51,7 @@ struct CityWeatherView: View {
                 }
                 .padding(.top, 60)
             }
+            .frame(maxHeight: .infinity, alignment: .top)
         }
     }
     
@@ -90,7 +90,7 @@ struct CityWeatherView: View {
             }
             .padding(10)
         }
-        .glassEffect(.clear.interactive(), in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .liquidGlassEffect(in: RoundedRectangle(cornerRadius: 20, style: .continuous))
         .padding(.horizontal, 15)
     }
     
@@ -153,7 +153,7 @@ struct CityWeatherView: View {
                 }
             }
         }
-        .glassEffect(.clear.interactive(), in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .liquidGlassEffect(in: RoundedRectangle(cornerRadius: 20, style: .continuous))
         .padding(.horizontal, 15)
     }
     

@@ -2,46 +2,45 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleDisplayName</key>
-    <string>Breezy</string>
-    <key>CFBundleIdentifier</key>
-    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-    <key>CFBundleVersion</key>
-    <string>1</string>
-    <key>CFBundleShortVersionString</key>
-    <string>1.0</string>
-    <key>CFBundleExecutable</key>
-    <string>$(EXECUTABLE_NAME)</string>
-    <key>Config</key>
-    <string>$(IS_PRODUCTION)</string>
-    <key>UILaunchScreen</key>
-    <dict/>
-    <!-- Location Permission -->
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>We need your location to show accurate weather information in your area.</string>
-    
-    <!-- Custom Fonts -->
-    <key>UIAppFonts</key>
-    <array>
-        <!-- Poppins -->
-        <string>Poppins-Regular.ttf</string>
-        <string>Poppins-Medium.ttf</string>
-        <string>Poppins-SemiBold.ttf</string>
-        <string>Poppins-Bold.ttf</string>
-        <string>Poppins-ExtraBold.ttf</string>
-        <string>Poppins-Black.ttf</string>
-        
-        <!-- Inter -->
-        <string>Inter-Thin.ttf</string>
-        <string>Inter-ExtraLight.ttf</string>
-        <string>Inter-Light.ttf</string>
-        <string>Inter-Regular.ttf</string>
-        <string>Inter-Medium.ttf</string>
-        <string>Inter-SemiBold.ttf</string>
-        <string>Inter-Bold.ttf</string>
-        <string>Inter-ExtraBold.ttf</string>
-        <string>Inter-Black.ttf</string>
-    </array>
-    
+	<key>CFBundleDisplayName</key>
+	<string>Breezy</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>Config</key>
+	<string>$(IS_PRODUCTION)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to show accurate weather information in your area.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Poppins-Regular.ttf</string>
+		<string>Poppins-Medium.ttf</string>
+		<string>Poppins-SemiBold.ttf</string>
+		<string>Poppins-Bold.ttf</string>
+		<string>Poppins-ExtraBold.ttf</string>
+		<string>Poppins-Black.ttf</string>
+		<string>Inter-Thin.ttf</string>
+		<string>Inter-ExtraLight.ttf</string>
+		<string>Inter-Light.ttf</string>
+		<string>Inter-Regular.ttf</string>
+		<string>Inter-Medium.ttf</string>
+		<string>Inter-SemiBold.ttf</string>
+		<string>Inter-Bold.ttf</string>
+		<string>Inter-ExtraBold.ttf</string>
+		<string>Inter-Black.ttf</string>
+	</array>
+	<key>UILaunchScreen</key>
+	<dict/>
+	<key>UIStatusBarHidden</key>
+	<false/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
 </dict>
 </plist>

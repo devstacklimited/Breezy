@@ -16,8 +16,14 @@ struct HomeView: View {
 
     var body: some View {
         ZStack {
-            Color.backgroundGradient
-                .ignoresSafeArea()
+            GeometryReader { geometry in
+                Image("background")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .clipped()
+            }
+            .ignoresSafeArea()
             
             // MARK: LOADING / ERROR
             if presenter.isLoading && presenter.cityWeathers.isEmpty {
@@ -31,12 +37,6 @@ struct HomeView: View {
                     }
                 }
                 .tabViewStyle(.page(indexDisplayMode: .automatic))
-                
-                VStack {
-                    Spacer()
-                    bottomControls
-                }
-                .padding(.bottom, 20)
             }
         }
         .task {
@@ -69,14 +69,20 @@ struct HomeView: View {
 
             Spacer()
 
-            // CITIES BUTTON (Center)
-            HStack {
+            HStack(spacing: 6){
                 Image(systemName: "location.fill")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 8, height: 8)
                     .foregroundColor(.white)
                     .padding(10)
+
+                /// Show dots for other cities (limit 3)
+                ForEach(Array(presenter.cityWeathers.enumerated().dropFirst().prefix(3)), id: \.offset){ index, _ in
+                    Circle()
+                        .fill(presenter.selectedCityIndex == index ? Color.white : Color.white.opacity(0.4))
+                        .frame(width: 6, height: 6)
+                }
             }
             .background(
                 Capsule()
