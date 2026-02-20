@@ -18,7 +18,7 @@ struct SplashView: View {
     var body: some View {
         ZStack {
             // Background gradient
-            Color.backgroundGradient
+            Color.black
                 .ignoresSafeArea()
             
             // Centering content vertically

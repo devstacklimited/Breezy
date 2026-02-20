@@ -26,42 +26,16 @@ extension View {
         tint: Color? = nil,
         interactive: Bool = false
     ) -> some View {
-        if #available(iOS 26, *) {
+        if #available(iOS 26, *){
             self
-                .glassEffect(
-                    .clear
-                        .tint(tint ?? .white.opacity(0.08))
-                        .interactive(interactive),
-                    in: shape
-                )
-                .overlay {
-                    shape
-                        .stroke(
-                            LinearGradient(
-                                colors: [
-                                    Color.white.opacity(0.6),
-                                    Color.white.opacity(0.1)
-                                ],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: 1
-                        )
-                        .blendMode(.overlay)
-                }
-                .shadow(color: .black.opacity(0.7), radius: 15, y: 10)
+                .glassEffect(.clear.tint(tint).interactive(interactive), in: shape)
                 .clipShape(shape)
         } else {
             self
                 .background {
                     shape
-                        .fill(.ultraThinMaterial)
+                        .fill(Color.customTab)
                 }
-                .overlay {
-                    shape
-                        .stroke(Color.white.opacity(0.25), lineWidth: 1)
-                }
-                .shadow(color: .black.opacity(0.15), radius: 10, y: 6)
                 .clipShape(shape)
         }
     }

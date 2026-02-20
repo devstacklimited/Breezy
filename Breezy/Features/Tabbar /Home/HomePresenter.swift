@@ -79,7 +79,6 @@ final class HomePresenter: ObservableObject {
         errorMessage = nil
         let apiKey = SecretsManager.shared.credentials?.appid ?? ""
         let params = ["q": cityName, "appid": apiKey, "units": "metric"]
-
         do {
             let current: Weather = try await interactor.loadWeather(params)
             let forecast: Forecast = try await interactor.loadForecast(params)
