@@ -45,7 +45,7 @@ struct CityWeatherView: View {
                 .padding(.top, 10)
                 
                 VStack(spacing: 15){
-//                    hourlyCard(vm)
+                    hourlyCard(vm)
                     dailyCard(vm)
                 }
                 .padding(.top, 60)

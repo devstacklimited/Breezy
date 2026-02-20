@@ -10,8 +10,9 @@ import SwiftUI
 struct HomeView: View {
     let router: AppRouter
     @EnvironmentObject var sessionManager: AppSessionManager
-    @StateObject private var presenter = HomePresenter(interactor: WeatherInteractor(service: WeatherService.shared))
-    @State private var showCityManager = false
+    @StateObject private var presenter = HomePresenter(
+        interactor: WeatherInteractor(service: WeatherService.shared)
+    )
 
     var body: some View {
         ZStack {
@@ -22,26 +23,36 @@ struct HomeView: View {
                     .clipped()
             }
             .ignoresSafeArea()
-            
-            // MARK: LOADING / ERROR
+
             if presenter.isLoading && presenter.cityWeathers.isEmpty {
                 ProgressView()
-                    .foregroundColor(.white)
+                    .tint(.white)
             } else {
-                VStack(spacing: 10){
+                VStack(spacing: 30){
+                    // MARK: Horizontal City Pager
                     TabView(selection: $presenter.selectedCityIndex){
                         ForEach(Array(presenter.cityWeathers.enumerated()), id: \.offset){ index, vm in
                             CityWeatherView(vm: vm)
                                 .tag(index)
                         }
                     }
-                    .tabViewStyle(.page(indexDisplayMode: .automatic))
-                    
-                    /// Show dots for other cities (limit 3)
-                    ForEach(Array(presenter.cityWeathers.enumerated().dropFirst().prefix(3)), id: \.offset){ index, _ in
-                        Circle()
-                            .fill(presenter.selectedCityIndex == index ? Color.white : Color.white.opacity(0.4))
-                            .frame(width: 6, height: 6)
+                    .tabViewStyle(.page(indexDisplayMode: .always)) // we use custom dots
+
+                    // MARK: Page Indicator
+                    if presenter.cityWeathers.count > 1 {
+                        HStack(spacing: 8) {
+                            ForEach(0..<presenter.cityWeathers.count, id: \.self){ index in
+                                Circle()
+                                    .fill(
+                                        presenter.selectedCityIndex == index
+                                        ? Color.white
+                                        : Color.white.opacity(0.4)
+                                    )
+                                    .frame(width: 8, height: 8)
+                                    .animation(.easeInOut(duration: 0.2), value: presenter.selectedCityIndex)
+                            }
+                        }
+                        .padding(.bottom, 10)
                     }
                 }
             }
@@ -50,8 +61,11 @@ struct HomeView: View {
             await presenter.loadAllSavedCities()
         }
         .onReceive(sessionManager.$userCity){ city in
-            if let city = city, !presenter.cities.contains(city){
-                presenter.cities.append(city)
+            if let city = city,
+               !presenter.cities.contains(where: { $0.caseInsensitiveCompare(city) == .orderedSame }){
+                Task {
+                    await presenter.addCity(city)
+                }
             }
         }
     }
