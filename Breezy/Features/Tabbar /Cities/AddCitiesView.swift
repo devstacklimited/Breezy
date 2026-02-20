@@ -9,20 +9,24 @@ import SwiftUI
 
 struct AddCitiesView: View {
     let router: AppRouter
-    
     @State private var searchText: String = ""
     @FocusState private var isSearchFocused: Bool
+    @StateObject private var presenter = HomePresenter(
+        interactor: WeatherInteractor(service: WeatherService.shared)
+    )
     
-    // Demo data (replace later with presenter data)
-    @State private var cities: [CityItem] = [
-        CityItem(name: "Pakistan", subtitle: "My Location", temp: "15°", high: "28°", low: "13°"),
-        CityItem(name: "Islamabad", subtitle: "12:50 AM", temp: "14°", high: "25°", low: "12°")
-    ]
-    
-    var filteredCities: [CityItem] {
-        if searchText.isEmpty { return cities }
-        return cities.filter {
-            $0.name.localizedCaseInsensitiveContains(searchText)
+    /// Demo data (replace later with presenter data)
+    private var cityItems: [CityItem]{
+        presenter.cityWeathers.enumerated().map { index, vm in
+            CityItem(
+                id: vm.id,
+                name: vm.city,
+                subtitle: index == 0 ? "My Location" : currentTime(),
+                temp: vm.temperature,
+                high: vm.high,
+                low: vm.low,
+                isDeletable: index != 0
+            )
         }
     }
 
@@ -43,8 +47,17 @@ struct AddCitiesView: View {
                 /// Cities List
                 ScrollView(showsIndicators: false){
                     VStack(spacing: 15){
-                        ForEach(filteredCities){ city in
+                        ForEach(cityItems){ city in
                             CityCardView(city: city)
+                                .swipeActions(edge: .trailing, allowsFullSwipe: true){
+                                    if city.isDeletable {
+                                        Button(role: .destructive){
+                                            deleteCity(city)
+                                        } label: {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                    }
+                                }
                         }
                     }
                     .padding(.top, 10)
@@ -52,6 +65,11 @@ struct AddCitiesView: View {
                 }
             }
             .padding(.vertical, 10)
+        }
+        .task {
+            if presenter.cities.isEmpty {
+                await presenter.addCity("Islamabad") /// Replace with actual location later
+            }
         }
     }
     
@@ -64,6 +82,12 @@ struct AddCitiesView: View {
                 .foregroundColor(.white)
                 .focused($isSearchFocused)
                 .submitLabel(.search)
+                .onSubmit {
+                    Task {
+                        await presenter.addCity(searchText)
+                        searchText = ""
+                    }
+                }
             
             Image(systemName: "mic")
                 .foregroundColor(.white.opacity(0.7))
@@ -73,8 +97,19 @@ struct AddCitiesView: View {
         .liquidGlassEffect(in:  RoundedRectangle(cornerRadius: 30))
         .padding(.horizontal, 20)
     }
+    
+    private func deleteCity(_ city: CityItem){
+        guard let index = presenter.cityWeathers.firstIndex(where: { $0.id == city.id }) else { return }
+        presenter.cityWeathers.remove(at: index)
+        presenter.cities.remove(at: index)
+    }
+    
+    private func currentTime() -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter.string(from: Date())
+    }
 }
-
 
 struct CityCardView: View {
     let city: CityItem
@@ -115,10 +150,11 @@ struct CityCardView: View {
 }
 
 struct CityItem: Identifiable {
-    let id = UUID()
+    let id: UUID
     let name: String
     let subtitle: String
     let temp: String
     let high: String
     let low: String
+    let isDeletable: Bool
 }
