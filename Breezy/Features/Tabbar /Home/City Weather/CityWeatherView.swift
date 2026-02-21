@@ -30,7 +30,7 @@ private extension CityWeatherView {
         VStack(spacing: 0){
             HStack(alignment: .top){
                 VStack(alignment: .leading, spacing: 4){
-                    Text(vm.city)
+                    Text(vm.isCurrentLocation ? "My Location" : vm.city)
                         .poppinFont(.semibold, 28)
                         .foregroundColor(.white)
                     

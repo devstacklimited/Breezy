@@ -44,24 +44,28 @@ struct AddCitiesView: View {
                 /// Search Bar
                 searchBar
                 /// Cities List
-                ScrollView(showsIndicators: false){
-                    VStack(spacing: 15){
-                        ForEach(cityItems){ city in
-                            CityCardView(city: city)
-                                .swipeActions(edge: .trailing, allowsFullSwipe: true){
-                                    if city.isDeletable {
-                                        Button(role: .destructive){
-                                            deleteCity(city)
-                                        } label: {
-                                            Label("Delete", systemImage: "trash")
-                                        }
+                List {
+                    ForEach(cityItems){ city in
+                        CityCardView(city: city)
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true){
+                                if city.isDeletable {
+                                    Button {
+                                        deleteCity(city)
+                                    } label: {
+                                        Image(systemName: "trash")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 20, height: 20)
                                     }
+                                    .tint(.red)
                                 }
-                        }
+                            }
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
                     }
-                    .padding(.top, 10)
-                    .padding(.horizontal, 20)
                 }
+                .listStyle(.plain)
             }
             .padding(.top, 10)
         }

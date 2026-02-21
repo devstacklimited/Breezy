@@ -43,6 +43,7 @@ final class HomePresenter: ObservableObject {
         let humidity: Int
         let rain: Int
         let date: String
+        let isCurrentLocation: Bool
     }
 
     struct HourlyViewModel: Identifiable {
@@ -73,13 +74,14 @@ final class HomePresenter: ObservableObject {
         guard !cities.isEmpty else { return }
         isLoading = true
         cityWeathers = []
-        for city in cities {
-            await loadAndCacheWeatherForCity(city)
+        for (index, city) in cities.enumerated(){
+            let isCurrentLocation = (index == 0)
+            await loadAndCacheWeatherForCity(city, isCurrentLocation: isCurrentLocation)
         }
         isLoading = false
     }
 
-    func loadAndCacheWeatherForCity(_ cityName: String) async {
+    func loadAndCacheWeatherForCity(_ cityName: String, isCurrentLocation: Bool = false) async {
         isLoading = true
         errorMessage = nil
         let apiKey = SecretsManager.shared.credentials?.appid ?? ""
@@ -87,7 +89,7 @@ final class HomePresenter: ObservableObject {
         do {
             let current: Weather = try await interactor.loadWeather(params)
             let forecast: Forecast = try await interactor.loadForecast(params)
-            let vm = mapToCityWeatherVM(city: cityName, current: current, forecast: forecast)
+            let vm = mapToCityWeatherVM(city: cityName, current: current, forecast: forecast, isCurrentLocation: isCurrentLocation)
             if let idx = cityWeathers.firstIndex(where: { $0.city.caseInsensitiveCompare(cityName) == .orderedSame }){
                 cityWeathers[idx] = vm
             } else {
@@ -107,8 +109,8 @@ final class HomePresenter: ObservableObject {
     }
 
     // MARK: Mapping
-    private func mapToCityWeatherVM(city: String, current: Weather, forecast: Forecast) -> CityWeatherViewModel {
-        // Hourly (8 steps = 24h)
+    private func mapToCityWeatherVM(city: String, current: Weather, forecast: Forecast, isCurrentLocation: Bool) -> CityWeatherViewModel {
+        /// Hourly (8 steps = 24h)
         let hourlyVMs = forecast.list.prefix(8).map { item in
             let date = Date(timeIntervalSince1970: TimeInterval(item.dt))
             return HourlyViewModel(
@@ -182,7 +184,8 @@ final class HomePresenter: ObservableObject {
             windSpeed: windSpeed,
             humidity: humidity,
             rain: rain,
-            date: date
+            date: date,
+            isCurrentLocation: isCurrentLocation
         )
     }
 
