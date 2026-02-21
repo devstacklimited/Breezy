@@ -111,6 +111,30 @@ final class BaseApiClient: ApiClientProtocol {
     private func decodeResponse<T: Decodable>(data: Data, response: HTTPURLResponse) throws -> T {
         do {
             return try JSONDecoder().decode(T.self, from: data)
+        } catch let decodingError as DecodingError {
+            /// Extract key/path info if available
+            var keyPath: String = ""
+            var underlyingMessage = ""
+            switch decodingError {
+            case .typeMismatch(let type, let context):
+                keyPath = context.codingPath.map { $0.stringValue }.joined(separator: " -> ")
+                underlyingMessage = "Expected type \(type) but found different type."
+            case .valueNotFound(let type, let context):
+                keyPath = context.codingPath.map { $0.stringValue }.joined(separator: " -> ")
+                underlyingMessage = "Expected value of type \(type) not found."
+            case .keyNotFound(let key, let context):
+                keyPath = context.codingPath.map { $0.stringValue }.joined(separator: " -> ") + " -> \(key.stringValue)"
+                underlyingMessage = "Missing key \(key.stringValue)"
+            case .dataCorrupted(let context):
+                keyPath = context.codingPath.map { $0.stringValue }.joined(separator: " -> ")
+                underlyingMessage = "Data corrupted or invalid format."
+            @unknown default:
+                underlyingMessage = decodingError.localizedDescription
+            }
+
+            let message = "Decoding failed: \(underlyingMessage)" +
+                          (keyPath.isEmpty ? "" : " (Key path: \(keyPath))")
+            throw ApiError(message: message, statusCode: response.statusCode)
         } catch {
             throw ApiError(message: "Decoding failed: \(error.localizedDescription)", statusCode: response.statusCode)
         }

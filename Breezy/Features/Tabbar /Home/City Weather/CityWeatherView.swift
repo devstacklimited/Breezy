@@ -12,7 +12,7 @@ struct CityWeatherView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false){
-            VStack(spacing: 30){
+            VStack(spacing: 20){
                 /// HEADER
                 headerSection
                 /// WEATHER DETAILS CARD (dummy metrics for now)
@@ -21,7 +21,7 @@ struct CityWeatherView: View {
                 dailyCard(vm)
             }
             .padding(.top, 10)
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 10)
         }
     }
 }
@@ -72,17 +72,17 @@ private extension CityWeatherView {
 private extension CityWeatherView {
     var metricsCard: some View {
         HStack {
-            metricItem(icon: "wind", value: "8 mph", title: "Wind")
+            metricItem(icon: "wind", value: "\(String(format: "%.1f", vm.windSpeed)) mph", title: "Wind")
             
             Divider()
                 .background(Color.white.opacity(0.3))
             
-            metricItem(icon: "drop.fill", value: "42%", title: "Humidity")
+            metricItem(icon: "drop.fill", value: "\(vm.humidity) %", title: "Humidity")
             
             Divider()
                 .background(Color.white.opacity(0.3))
             
-            metricItem(icon: "cloud.rain.fill", value: "12%", title: "Rain")
+            metricItem(icon: "cloud.rain.fill", value: "\(vm.rain) %", title: "Rain")
         }
         .padding()
         .frame(height: 90)
@@ -109,7 +109,7 @@ private extension CityWeatherView {
 //MARK: - Daily Card
 private extension CityWeatherView {
     func dailyCard(_ vm: HomePresenter.CityWeatherViewModel) -> some View {
-        VStack(alignment: .leading, spacing: 15){
+        VStack(alignment: .leading, spacing: 10){
             HStack {
                 Text("5-Day Forecast")
                     .poppinFont(.semibold, 16)
@@ -117,12 +117,23 @@ private extension CityWeatherView {
                 
                 Spacer()
                 
-                Text("See More")
-                    .poppinFont(.regular, 14)
-                    .foregroundColor(.white.opacity(0.7))
+                Button {
+                    // TODO: Add navigation or action here
+                } label: {
+                    HStack(spacing: 4){
+                        Text("See More")
+                            .poppinFont(.regular, 14)
+                        
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12, weight: .semibold))
+                    }
+                    .foregroundColor(.white.opacity(0.85))
+                }
+                .buttonStyle(.plain)
             }
+            .padding(.horizontal, 10)
             
-            VStack(spacing: 0){
+            VStack {
                 ForEach(Array(vm.daily.enumerated()), id: \.offset){ index, d in
                     HStack {
                         Text(d.dayLabel)
@@ -152,7 +163,7 @@ private extension CityWeatherView {
                             .foregroundColor(.white)
                             .frame(width: 35)
                     }
-                    .padding(.vertical, 14)
+                    .padding(.vertical, 3)
                     
                     if index < vm.daily.count - 1 {
                         Divider()
@@ -160,8 +171,8 @@ private extension CityWeatherView {
                     }
                 }
             }
+            .padding()
+            .liquidGlassEffect(in: RoundedRectangle(cornerRadius: 25, style: .continuous))
         }
-        .padding()
-        .liquidGlassEffect(in: RoundedRectangle(cornerRadius: 25, style: .continuous))
     }
 }

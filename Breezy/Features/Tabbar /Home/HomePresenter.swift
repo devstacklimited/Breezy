@@ -39,6 +39,9 @@ final class HomePresenter: ObservableObject {
         let hourly: [HourlyViewModel]
         let daily: [DailyViewModel]
         let timezone: Int
+        let windSpeed: Double
+        let humidity: Int
+        let rain: Int
     }
 
     struct HourlyViewModel: Identifiable {
@@ -159,6 +162,11 @@ final class HomePresenter: ObservableObject {
             ?? "\(Int(forecast.list.first?.main.tempMin ?? 0))°"
         let high = current.main.temp_max.map { "\(Int($0))°" }
             ?? "\(Int(forecast.list.first?.main.tempMax ?? 0))°"
+        
+        let rain = Int(forecast.list.first?.pop ?? 0 * 100)
+        let windSpeed = current.wind?.speed ?? 0 * 2.237
+        let humidity = current.main.humidity
+        
         return CityWeatherViewModel(
             city: city,
             temperature: headerTemp,
@@ -168,7 +176,10 @@ final class HomePresenter: ObservableObject {
             iconName: headerIcon,
             hourly: Array(hourlyVMs),
             daily: Array(dailyVMs),
-            timezone: forecast.city.timezone
+            timezone: forecast.city.timezone,
+            windSpeed: windSpeed,
+            humidity: humidity,
+            rain: rain
         )
     }
 

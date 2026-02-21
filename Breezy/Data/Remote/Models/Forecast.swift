@@ -27,9 +27,10 @@ struct ForecastItem: Codable, Identifiable {
     let clouds: ForecastClouds
     let wind: ForecastWind
     let dtTxt: String
+    let pop : Int?
     
     enum CodingKeys: String, CodingKey {
-        case dt, main, weather, clouds, wind
+        case dt, main, weather, clouds, wind, pop
         case dtTxt = "dt_txt"
     }
 }
