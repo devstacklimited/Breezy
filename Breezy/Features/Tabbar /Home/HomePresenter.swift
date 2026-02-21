@@ -38,6 +38,7 @@ final class HomePresenter: ObservableObject {
         let iconName: String
         let hourly: [HourlyViewModel]
         let daily: [DailyViewModel]
+        let timezone: Int
     }
 
     struct HourlyViewModel: Identifiable {
@@ -166,7 +167,8 @@ final class HomePresenter: ObservableObject {
             low: low,
             iconName: headerIcon,
             hourly: Array(hourlyVMs),
-            daily: Array(dailyVMs)
+            daily: Array(dailyVMs),
+            timezone: forecast.city.timezone
         )
     }
 

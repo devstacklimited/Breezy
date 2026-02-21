@@ -21,10 +21,11 @@ struct AddCitiesView: View {
             CityItem(
                 id: vm.id,
                 name: vm.city,
-                subtitle: index == 0 ? "My Location" : currentTime(),
+                subtitle: index == 0 ? "My Location" : cityCurrentTime(timeZone: vm.timezone),
                 temp: vm.temperature,
                 high: vm.high,
                 low: vm.low,
+                condition: vm.condition,
                 isDeletable: index != 0
             )
         }
@@ -43,7 +44,6 @@ struct AddCitiesView: View {
             VStack(spacing: 10){
                 /// Search Bar
                 searchBar
-                
                 /// Cities List
                 ScrollView(showsIndicators: false){
                     VStack(spacing: 15){
@@ -64,11 +64,11 @@ struct AddCitiesView: View {
                     .padding(.horizontal, 20)
                 }
             }
-            .padding(.vertical, 10)
+            .padding(.top, 10)
         }
         .task {
             if presenter.cities.isEmpty {
-                await presenter.addCity("Islamabad") /// Replace with actual location later
+                await presenter.addCity("Islamabad")
             }
         }
     }
@@ -104,9 +104,13 @@ struct AddCitiesView: View {
         presenter.cities.remove(at: index)
     }
     
-    private func currentTime() -> String {
+    private func cityCurrentTime(timeZone: Int) -> String {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
+        /// Create timezone from seconds offset
+        if let tz = TimeZone(secondsFromGMT: timeZone){
+            formatter.timeZone = tz
+        }
         return formatter.string(from: Date())
     }
 }
@@ -132,7 +136,7 @@ struct CityCardView: View {
                     .foregroundColor(.white)
             }
             HStack {
-                Text("Clear")
+                Text(city.condition)
                     .font(.system(size: 13, weight: .medium))
                     .foregroundColor(.white.opacity(0.8))
                 
@@ -156,5 +160,6 @@ struct CityItem: Identifiable {
     let temp: String
     let high: String
     let low: String
+    let condition: String
     let isDeletable: Bool
 }
