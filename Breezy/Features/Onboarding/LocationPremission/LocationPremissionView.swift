@@ -15,84 +15,78 @@ struct LocationPermissionView: View {
     var body: some View {
         ZStack {
             // MARK: - Background Gradient
-            Color.backgroundGradient
-                .ignoresSafeArea()
+            GeometryReader { geometry in
+                Image("background")
+                    .resizable()
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .clipped()
+            }
+            .ignoresSafeArea()
             
             if locationManager.authorizationStatus == .authorizedAlways || locationManager.authorizationStatus == .authorizedWhenInUse {
                 ProgressView("Loading...")
                     .foregroundColor(.white)
             } else {
-                VStack(spacing: 10){
+                VStack(spacing: 25){
                     Spacer()
-                    // MARK: - App Icon
-                    Image(systemName: "cloud.sun.fill")
+                    Image(systemName: "location")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 100, height: 100)
-                        .foregroundStyle(.white, .yellow.opacity(0.7))
-                        .shadow(color: Color.white.opacity(0.6), radius: 25, x: 0, y: 0)
-                        .shadow(radius: 10)
+                        .frame(width: 60, height: 60)
+                        .padding(20)
+                        .liquidGlassEffect(in: Circle(), tint: .blue.opacity(0.7))
                     
-                    VStack (spacing: 5){
-                        // MARK: - Title
+                    VStack(spacing: 10){
                         Text("Enable Location Access")
-                            .poppinFont(.bold, 24)
+                            .poppinFont(.bold, 26)
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
                         
-                        // MARK: - Description
-                        Text("We use your location to show local weather updates and forecasts around you.")
+                        Text("Allow Breezy to access your location to show accurate local weather and forecasts.")
                             .interFont(.regular, 15)
                             .foregroundColor(.white.opacity(0.85))
                             .multilineTextAlignment(.center)
-                            .padding(.horizontal, 20)
+                            .padding(.horizontal, 30)
                     }
                     
-                    // MARK: - Instructions for denied/restricted
+                    Spacer()
+                    
                     VStack(spacing: 15){
-                        VStack(spacing: 5){
-                            Text("⚠️ Location Access Disabled")
-                                .interFont(.bold, 18)
+                        Button {
+                            locationManager.requestLocationAccess()
+                        } label: {
+                            Text("Allow Location")
+                                .poppinFont(.semibold, 17)
                                 .foregroundColor(.white)
-                                .multilineTextAlignment(.center)
-                            
-                            Text("Please enable location access to use Breezy and get local weather updates.")
-                                .interFont(.regular, 14)
-                                .foregroundColor(.white.opacity(0.85))
-                                .multilineTextAlignment(.center)
-                                .lineSpacing(4)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 55)
+                                .liquidGlassEffect(in: Capsule())
                         }
+                        .padding(.horizontal, 30)
                         
-                        Text("Go to Settings > Breezy > Location > Allow While Using App")
-                            .interFont(.bold, 15)
-                            .foregroundColor(.yellow.opacity(0.8))
-                            .multilineTextAlignment(.center)
-                            .lineLimit(nil)
+                        /// Show Settings Button if denied
+                        if locationManager.authorizationStatus == .denied ||
+                            locationManager.authorizationStatus == .restricted {
+                            Button {
+                                if let url = URL(string: UIApplication.openSettingsURLString){
+                                    UIApplication.shared.open(url)
+                                }
+                            } label: {
+                                Text("Open Settings")
+                                    .poppinFont(.medium, 16)
+                                    .foregroundColor(.white.opacity(0.9))
+                            }
+                        }
                     }
-                    .padding()
-                    .background(Color.black.opacity(0.2))
-                    .cornerRadius(14)
-                    .padding(.vertical, 15)
-                    .padding(.horizontal, 20)
-                    
                     Spacer()
                 }
             }
         }
         .navigationBarBackButtonHidden()
-        .onReceive(locationManager.$authorizationStatus){ status in
-            // If user granted permission, request location updates
-            if status == .authorizedWhenInUse || status == .authorizedAlways {
-                locationManager.requestLocationAccess()
-            }
-        }
         .onReceive(locationManager.$userCity){ city in
             if let city = city, !city.isEmpty {
                 sessionManager.setHomeIfCityAvailable(city: city)
             }
-        }
-        .onAppear {
-            locationManager.requestLocationAccess()
         }
     }
 }
