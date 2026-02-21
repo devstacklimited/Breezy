@@ -17,7 +17,7 @@ struct SessionView: View {
             case .permissionRequired:
                 SplashFlow()
             case .home:
-                HomeFlow()
+                TabbarFlow()
             }
         }
     }

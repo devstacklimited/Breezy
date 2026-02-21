@@ -8,7 +8,7 @@
 import Foundation
 
 enum AppRoute: Hashable {
-    case cities
+    case city
 }
 
 enum SplashRoute: Hashable {

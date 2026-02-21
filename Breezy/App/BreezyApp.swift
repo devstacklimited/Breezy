@@ -11,12 +11,16 @@ import SwiftUI
 @main
 struct BreezyApp: App {
     @StateObject private var sessionManager = AppSessionManager()
+    @StateObject private var homePresenter = HomePresenter(
+            interactor: WeatherInteractor(service: WeatherService.shared)
+        )
     
     var body: some Scene {
         WindowGroup {
             SessionView()
         }
         .environmentObject(sessionManager)
+        .environmentObject(homePresenter)
     }
     
     init(){

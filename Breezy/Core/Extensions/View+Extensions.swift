@@ -19,4 +19,38 @@ extension View {
     func hideKeyboard() -> some View {
         self.modifier(HideKeyboardModifier())
     }
+    
+    @ViewBuilder
+    func liquidGlassEffect<S: Shape>(
+        in shape: S,
+        tint: Color? = nil,
+        interactive: Bool = false
+    ) -> some View {
+        if #available(iOS 26, *){
+            self
+                .glassEffect(.clear.tint(tint).interactive(interactive), in: shape)
+                .clipShape(shape)
+        } else {
+            self
+                .background {
+                    shape
+                        .fill(Color.customTab)
+                }
+                .clipShape(shape)
+        }
+    }
+    
+    @ViewBuilder
+    func glassContainer(
+        spacing: CGFloat = 12,
+        content: () -> some View
+    ) -> some View {
+        if #available(iOS 26, *){
+            GlassEffectContainer(spacing: spacing){
+                content()
+            }
+        } else {
+            content()
+        }
+    }
 }

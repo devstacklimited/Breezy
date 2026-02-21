@@ -15,112 +15,102 @@ import Combine
 @MainActor
 final class HomePresenter: ObservableObject {
     // MARK: Published state for the UI
-    @Published var cities: [String] = []                         // Saved city names
-    @Published var selectedCityIndex: Int = 0                    // Currently visible city index
-    @Published var cityWeathers: [CityWeatherViewModel] = []     // Cached weather data
+    @Published var cities: [String] = [] /// Saved city names
+    @Published var selectedCityIndex: Int = 0 /// Currently visible city index
+    @Published var cityWeathers: [CityWeatherViewModel] = [] /// Cached weather data
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
-
+    
     private let interactor: WeatherInteractorDelegate
-
+    
     init(interactor: WeatherInteractorDelegate){
         self.interactor = interactor
-        // Optionally: load persisted cities here (UserDefaults / DB)
     }
 
     // MARK: View models used by HomeView
     struct CityWeatherViewModel: Identifiable {
         let id = UUID()
         let city: String
-        let temperature: String     // current temp
-        let condition: String       // description, e.g. "Cloudy"
-        let highLow: String         // daily high / low
-        let iconName: String        // SF Symbol
+        let temperature: String
+        let condition: String
+        let high: String
+        let low: String
+        let iconName: String
         let hourly: [HourlyViewModel]
         let daily: [DailyViewModel]
+        let timezone: Int
+        let windSpeed: Double
+        let humidity: Int
+        let rain: Int
+        let date: String
+        let isCurrentLocation: Bool
     }
 
     struct HourlyViewModel: Identifiable {
         let id = UUID()
-        let hourLabel: String   // "2PM"
-        let temp: String        // "23°"
+        let hourLabel: String
+        let temp: String
         let iconName: String
     }
 
     struct DailyViewModel: Identifiable {
         let id = UUID()
-        let dayLabel: String    // "Mon"
-        let min: String         // "12°"
-        let max: String         // "25°"
+        let dayLabel: String
+        let min: String
+        let max: String
         let iconName: String
     }
 
     // MARK: Public API
-
-    /// Add a new city (skip duplicates) and load weather
     func addCity(_ city: String) async {
         let normalized = city.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !normalized.isEmpty else { return }
         guard !cities.contains(where: { $0.caseInsensitiveCompare(normalized) == .orderedSame }) else { return }
-
         cities.append(normalized)
         await loadAndCacheWeatherForCity(normalized)
     }
 
-    /// Load weather for all saved cities (startup use)
     func loadAllSavedCities() async {
         guard !cities.isEmpty else { return }
         isLoading = true
         cityWeathers = []
-        for city in cities {
-            await loadAndCacheWeatherForCity(city)
+        for (index, city) in cities.enumerated(){
+            let isCurrentLocation = (index == 0)
+            await loadAndCacheWeatherForCity(city, isCurrentLocation: isCurrentLocation)
         }
         isLoading = false
     }
 
-    /// Load + cache weather for one city
-    func loadAndCacheWeatherForCity(_ cityName: String) async {
+    func loadAndCacheWeatherForCity(_ cityName: String, isCurrentLocation: Bool = false) async {
         isLoading = true
         errorMessage = nil
         let apiKey = SecretsManager.shared.credentials?.appid ?? ""
-        let currentParams = [
-            "q": cityName,
-            "appid": apiKey,
-            "units": "metric"
-        ]
-
+        let params = ["q": cityName, "appid": apiKey, "units": "metric"]
         do {
-            let current: Weather = try await interactor.loadWeather(currentParams)
-            let forecastParams = [
-                "q": cityName,
-                "appid": apiKey,
-                "units": "metric"
-            ]
-            let forecast: Forecast = try await interactor.loadForecast(forecastParams)
-            let vm = mapToCityWeatherVM(city: cityName, current: current, forecast: forecast)
+            let current: Weather = try await interactor.loadWeather(params)
+            let forecast: Forecast = try await interactor.loadForecast(params)
+            let vm = mapToCityWeatherVM(city: cityName, current: current, forecast: forecast, isCurrentLocation: isCurrentLocation)
             if let idx = cityWeathers.firstIndex(where: { $0.city.caseInsensitiveCompare(cityName) == .orderedSame }){
                 cityWeathers[idx] = vm
             } else {
                 cityWeathers.append(vm)
             }
-        } catch {
+        }
+        catch {
             errorMessage = error.localizedDescription
             print("❌ HomePresenter error:", error)
         }
-
         isLoading = false
     }
 
-    /// Refresh currently selected city
     func refreshSelectedCity() async {
         guard cities.indices.contains(selectedCityIndex) else { return }
         await loadAndCacheWeatherForCity(cities[selectedCityIndex])
     }
 
     // MARK: Mapping
-
-    private func mapToCityWeatherVM(city: String, current: Weather, forecast: Forecast) -> CityWeatherViewModel {
-        // Hourly (8 steps = 24h)
+    private func mapToCityWeatherVM(city: String, current: Weather, forecast: Forecast, isCurrentLocation: Bool) -> CityWeatherViewModel {
+        /// Hourly (8 steps = 24h)
         let hourlyVMs = forecast.list.prefix(8).map { item in
             let date = Date(timeIntervalSince1970: TimeInterval(item.dt))
             return HourlyViewModel(
@@ -131,11 +121,25 @@ final class HomePresenter: ObservableObject {
         }
 
         // Daily (group forecast by day)
-        let grouped = Dictionary(grouping: forecast.list) { item in
+        let grouped = Dictionary(grouping: forecast.list){ item in
             calendarStartOfDay(for: Date(timeIntervalSince1970: TimeInterval(item.dt)))
         }
-
-        let dailyVMs = grouped.keys.sorted().prefix(7).map { day in
+        let sortedDays = grouped.keys.sorted()
+        /// Find today’s date
+        let today = calendarStartOfDay(for: Date())
+        var orderedDays: [Date] = []
+        /// 1) Include TODAY if available
+        if let todayGroup = sortedDays.first(where: { calendarStartOfDay(for: $0) == today }){
+            orderedDays.append(todayGroup)
+        }
+        /// 2) Append upcoming days (excluding today)
+        for day in sortedDays {
+            if calendarStartOfDay(for: day) != today {
+                orderedDays.append(day)
+            }
+        }
+        /// Only take first 5 days
+        let dailyVMs = orderedDays.prefix(5).map { day in
             let items = grouped[day] ?? []
             let minTemp = items.map { $0.main.tempMin }.min() ?? 0
             let maxTemp = items.map { $0.main.tempMax }.max() ?? 0
@@ -156,29 +160,36 @@ final class HomePresenter: ObservableObject {
         let headerIcon = mapIconCodeToSFSymbol(
             current.weather.first?.icon ?? (forecast.list.first?.weather.first?.icon ?? "")
         )
-
-        let highLow: String = {
-            if let min = current.main.temp_min, let max = current.main.temp_max {
-                return "\(Int(min))° / \(Int(max))°"
-            } else if let first = forecast.list.first {
-                return "\(Int(first.main.tempMin))° / \(Int(first.main.tempMax))°"
-            }
-            return "-- / --"
-        }()
-
+        /// Separate HIGH and LOW instead of merging
+        let low = current.main.temp_min.map { "\(Int($0))°" }
+            ?? "\(Int(forecast.list.first?.main.tempMin ?? 0))°"
+        let high = current.main.temp_max.map { "\(Int($0))°" }
+            ?? "\(Int(forecast.list.first?.main.tempMax ?? 0))°"
+        
+        let rain = Int(forecast.list.first?.pop ?? 0 * 100)
+        let date = formattedCityDate(from: forecast.list.first?.date ?? "", timeZoneSeconds: forecast.city.timezone)
+        let windSpeed = current.wind?.speed ?? 0 * 2.237
+        let humidity = current.main.humidity
+        
         return CityWeatherViewModel(
             city: city,
             temperature: headerTemp,
             condition: headerCondition,
-            highLow: highLow,
+            high: high,
+            low: low,
             iconName: headerIcon,
             hourly: Array(hourlyVMs),
-            daily: Array(dailyVMs)
+            daily: Array(dailyVMs),
+            timezone: forecast.city.timezone,
+            windSpeed: windSpeed,
+            humidity: humidity,
+            rain: rain,
+            date: date,
+            isCurrentLocation: isCurrentLocation
         )
     }
 
-    // MARK: Helpers
-
+    // MARK: - Helpers
     private func hourLabel(for date: Date) -> String {
         let df = DateFormatter()
         df.dateFormat = "ha"
@@ -189,6 +200,19 @@ final class HomePresenter: ObservableObject {
         let df = DateFormatter()
         df.dateFormat = "EEE"
         return df.string(from: date)
+    }
+    
+    func formattedCityDate(from date: String, timeZoneSeconds: Int) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        guard let date = inputFormatter.date(from: date) else {
+            return date
+        }
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "EEE, MMM d"
+        outputFormatter.timeZone = TimeZone(secondsFromGMT: timeZoneSeconds)
+        return outputFormatter.string(from: date)
     }
 
     private func calendarStartOfDay(for date: Date) -> Date {

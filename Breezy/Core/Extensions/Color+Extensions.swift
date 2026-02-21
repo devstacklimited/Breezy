@@ -26,12 +26,15 @@ extension Color {
         self.init(.sRGB, red: Double(r) / 255, green: Double(g) / 255, blue: Double(b) / 255, opacity: Double(a) / 255)
     }
     
-    static var backgroundGradient: RadialGradient {
-        RadialGradient(
-            gradient: Gradient(colors: [.backgroundTop, .backgroundBottom]),
-            center: .bottomTrailing,
-            startRadius: 50,
-            endRadius: 800
+    static var backgroundGradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(stops: [
+                .init(color: Color(red: 0.23, green: 0.55, blue: 0.92), location: 0.0),   // blue
+                .init(color: Color(red: 0.45, green: 0.70, blue: 0.78), location: 0.5),   // teal blend
+                .init(color: Color(red: 0.95, green: 0.78, blue: 0.35), location: 1.0)    // warm yellow
+            ]),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
         )
     }
 }
