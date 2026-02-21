@@ -11,18 +11,16 @@ struct CityWeatherView: View {
     let vm: HomePresenter.CityWeatherViewModel
     
     var body: some View {
-        ScrollView(showsIndicators: false){
-            VStack(spacing: 20){
-                /// HEADER
-                headerSection
-                /// WEATHER DETAILS CARD (dummy metrics for now)
-                metricsCard
-                /// DAILY FORECAST
-                dailyCard(vm)
-            }
-            .padding(.top, 10)
-            .padding(.horizontal, 10)
+        VStack(spacing: 20){
+            /// HEADER
+            headerSection
+            /// WEATHER DETAILS CARD (dummy metrics for now)
+            metricsCard
+            /// DAILY FORECAST
+            dailyCard(vm)
         }
+        .padding(.top, 5)
+        .padding(.horizontal, 10)
     }
 }
 

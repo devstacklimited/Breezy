@@ -10,10 +10,8 @@ import SwiftUI
 struct HomeView: View {
     let router: AppRouter
     @EnvironmentObject var sessionManager: AppSessionManager
-    @StateObject private var presenter = HomePresenter(
-        interactor: WeatherInteractor(service: WeatherService.shared)
-    )
-
+    @EnvironmentObject var presenter: HomePresenter
+    
     var body: some View {
         ZStack {
             GeometryReader { geometry in
@@ -27,6 +25,10 @@ struct HomeView: View {
             if presenter.isLoading && presenter.cityWeathers.isEmpty {
                 ProgressView()
                     .tint(.white)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.black.opacity(0.001))
+                    .ignoresSafeArea(edges: .bottom)
+                
             } else {
                 VStack(spacing: 30){
                     // MARK: Horizontal City Pager
@@ -36,11 +38,11 @@ struct HomeView: View {
                                 .tag(index)
                         }
                     }
-                    .tabViewStyle(.page(indexDisplayMode: .always)) // we use custom dots
+                    .tabViewStyle(.page(indexDisplayMode: .never)) /// we use custom dots
 
-                    // MARK: Page Indicator
+                    /// Indicator
                     if presenter.cityWeathers.count > 1 {
-                        HStack(spacing: 8) {
+                        HStack(spacing: 8){
                             ForEach(0..<presenter.cityWeathers.count, id: \.self){ index in
                                 Circle()
                                     .fill(
@@ -52,9 +54,10 @@ struct HomeView: View {
                                     .animation(.easeInOut(duration: 0.2), value: presenter.selectedCityIndex)
                             }
                         }
-                        .padding(.bottom, 10)
+                        .padding(.bottom, 5)
                     }
                 }
+                .ignoresSafeArea(edges: .bottom)
             }
         }
         .task {

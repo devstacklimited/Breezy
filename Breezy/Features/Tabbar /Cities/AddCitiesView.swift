@@ -9,11 +9,10 @@ import SwiftUI
 
 struct AddCitiesView: View {
     let router: AppRouter
+    @EnvironmentObject var presenter: HomePresenter
+    
     @State private var searchText: String = ""
     @FocusState private var isSearchFocused: Bool
-    @StateObject private var presenter = HomePresenter(
-        interactor: WeatherInteractor(service: WeatherService.shared)
-    )
     
     /// Demo data (replace later with presenter data)
     private var cityItems: [CityItem]{
