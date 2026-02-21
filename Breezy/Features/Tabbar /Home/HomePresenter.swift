@@ -42,6 +42,7 @@ final class HomePresenter: ObservableObject {
         let windSpeed: Double
         let humidity: Int
         let rain: Int
+        let date: String
     }
 
     struct HourlyViewModel: Identifiable {
@@ -164,6 +165,7 @@ final class HomePresenter: ObservableObject {
             ?? "\(Int(forecast.list.first?.main.tempMax ?? 0))°"
         
         let rain = Int(forecast.list.first?.pop ?? 0 * 100)
+        let date = formattedCityDate(from: forecast.list.first?.date ?? "", timeZoneSeconds: forecast.city.timezone)
         let windSpeed = current.wind?.speed ?? 0 * 2.237
         let humidity = current.main.humidity
         
@@ -179,7 +181,8 @@ final class HomePresenter: ObservableObject {
             timezone: forecast.city.timezone,
             windSpeed: windSpeed,
             humidity: humidity,
-            rain: rain
+            rain: rain,
+            date: date
         )
     }
 
@@ -194,6 +197,19 @@ final class HomePresenter: ObservableObject {
         let df = DateFormatter()
         df.dateFormat = "EEE"
         return df.string(from: date)
+    }
+    
+    func formattedCityDate(from date: String, timeZoneSeconds: Int) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        guard let date = inputFormatter.date(from: date) else {
+            return date
+        }
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "EEE, MMM d"
+        outputFormatter.timeZone = TimeZone(secondsFromGMT: timeZoneSeconds)
+        return outputFormatter.string(from: date)
     }
 
     private func calendarStartOfDay(for date: Date) -> Date {

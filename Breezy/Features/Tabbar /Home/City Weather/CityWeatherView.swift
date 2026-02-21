@@ -34,7 +34,7 @@ private extension CityWeatherView {
                         .poppinFont(.semibold, 28)
                         .foregroundColor(.white)
                     
-                    Text("Mon, Oct 24")
+                    Text(vm.date)
                         .poppinFont(.regular, 16)
                         .foregroundColor(.white.opacity(0.8))
                 }

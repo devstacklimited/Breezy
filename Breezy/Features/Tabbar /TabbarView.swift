@@ -19,7 +19,7 @@ struct TabbarView: View {
             
             AddCitiesView(router: router)
                 .tabItem {
-                    Label("Weather", systemImage: "map")
+                    Label("Cities", systemImage: "map")
                 }
             
             SettingsView(router: router)
