@@ -15,7 +15,7 @@ struct SettingsView: View {
     
     init(router: AppRouter){
         self.router = router
-        UISegmentedControl.appearance().selectedSegmentTintColor = .segment
+        UISegmentedControl.appearance().selectedSegmentTintColor = .customTab
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
     }
     
