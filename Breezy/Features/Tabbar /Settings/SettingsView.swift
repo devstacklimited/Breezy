@@ -13,6 +13,12 @@ struct SettingsView: View {
     @State private var selectedTemp = "°F"
     @State private var selectedWind = "mph"
     
+    init(router: AppRouter){
+        self.router = router
+        UISegmentedControl.appearance().selectedSegmentTintColor = .segment
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+    }
+    
     var body: some View {
         ZStack {
             GeometryReader { geometry in
@@ -125,18 +131,20 @@ struct SettingsView: View {
         title: String,
         @ViewBuilder content: () -> Content
     ) -> some View {
-        VStack(alignment: .leading, spacing: 16){
-            Text(title)
-                .poppinFont(.bold, 18)
-                .foregroundColor(.gray)
-                .padding(.leading, 5)
-            
-            VStack(spacing: 16){
-                content()
+        glassContainer(spacing: 16){
+            VStack(alignment: .leading, spacing: 16){
+                Text(title)
+                    .poppinFont(.bold, 18)
+                    .foregroundColor(.gray)
+                    .padding(.leading, 5)
+                
+                VStack(spacing: 16){
+                    content()
+                }
             }
+            .padding()
+            .liquidGlassEffect(in: RoundedRectangle(cornerRadius: 20))
         }
-        .padding()
-        .liquidGlassEffect(in: RoundedRectangle(cornerRadius: 20))
     }
     
     /// Settings Row
@@ -210,6 +218,5 @@ struct SettingsView: View {
             }
         }
         .pickerStyle(.segmented)
-        .tint(Color.blue.opacity(0.15))
     }
 }
