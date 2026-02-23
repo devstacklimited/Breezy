@@ -78,9 +78,9 @@ struct SplashView: View {
                     floatOffset = -10
                 }
             /// Navigation
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
-//                router.path.append(SplashRoute.locationPermission)
-//            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
+                router.path.append(SplashRoute.locationPermission)
+            }
         }
     }
 }
