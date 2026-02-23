@@ -24,21 +24,21 @@ struct SettingsView: View {
             }
             .ignoresSafeArea()
             
-            ScrollView {
-                VStack(spacing: 24){
-                    /// HEADER
-                    VStack(alignment: .leading, spacing: 6){
-                        Text("Settings")
-                            .poppinFont(.bold, 28)
-                            .foregroundColor(.primary)
-                        
-                        Text("Tune appearance and units for your forecasts.")
-                            .interFont(.regular, 14)
-                            .foregroundColor(.gray)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            VStack {
+                /// HEADER
+                VStack(alignment: .leading, spacing: 6){
+                    Text("Settings")
+                        .poppinFont(.bold, 28)
+                        .foregroundColor(.white)
                     
-                    
+                    Text("Tune appearance and units for your forecasts.")
+                        .interFont(.regular, 14)
+                        .foregroundColor(.white)
+                }
+                .padding(10)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                VStack(spacing: 20){
                     /// APPEARANCE SECTION
                     settingsCard(title: "Appearance"){
                         settingsRow(
@@ -50,9 +50,10 @@ struct SettingsView: View {
                                 options: ["System","Light","Dark"],
                                 selection: $selectedTheme
                             )
+                            .frame(width: 190)
                         }
                         
-                        Divider().opacity(0.2)
+                        Divider()
                         
                         settingsRow(
                             icon: "drop.fill",
@@ -71,7 +72,6 @@ struct SettingsView: View {
                     }
                     /// UNITS SECTION
                     settingsCard(title: "Units"){
-                        
                         settingsRow(
                             icon: "thermometer",
                             title: "Temperature",
@@ -81,9 +81,10 @@ struct SettingsView: View {
                                 options: ["°F","°C"],
                                 selection: $selectedTemp
                             )
+                            .frame(width: 80)
                         }
                         
-                        Divider().opacity(0.2)
+                        Divider()
                         
                         settingsRow(
                             icon: "wind",
@@ -94,18 +95,18 @@ struct SettingsView: View {
                                 options: ["mph","m/s"],
                                 selection: $selectedWind
                             )
+                            .frame(width: 90)
                         }
                     }
                     /// ABOUT SECTION
                     settingsCard(title: "About"){
-                        
                         navigationRow(
                             icon: "bell",
                             title: "Notifications",
                             subtitle: "Rain alerts and daily summaries"
                         )
                         
-                        Divider().opacity(0.2)
+                        Divider()
                         
                         navigationRow(
                             icon: "info.circle",
@@ -114,7 +115,7 @@ struct SettingsView: View {
                         )
                     }
                 }
-                .padding(24)
+                .padding(10)
             }
         }
     }
@@ -126,16 +127,16 @@ struct SettingsView: View {
     ) -> some View {
         VStack(alignment: .leading, spacing: 16){
             Text(title)
-                .interFont(.medium, 14)
+                .poppinFont(.bold, 18)
                 .foregroundColor(.gray)
+                .padding(.leading, 5)
             
             VStack(spacing: 16){
                 content()
             }
-            .padding()
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
         }
+        .padding()
+        .liquidGlassEffect(in: RoundedRectangle(cornerRadius: 20))
     }
     
     /// Settings Row
@@ -202,28 +203,13 @@ struct SettingsView: View {
         options: [String],
         selection: Binding<String>
     ) -> some View {
-        HStack(spacing: 0){
+        Picker("", selection: selection){
             ForEach(options, id: \.self){ option in
-                Button {
-                    selection.wrappedValue = option
-                } label: {
-                    Text(option)
-                        .interFont(.medium, 13)
-                        .foregroundColor(
-                            selection.wrappedValue == option ? .white : .gray
-                        )
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 6)
-                        .background(
-                            selection.wrappedValue == option ?
-                            Color.blue :
-                            Color.clear
-                        )
-                }
+                Text(option)
+                    .tag(option)
             }
         }
-        .frame(width: 150, height: 32)
-        .background(Color.white.opacity(0.5))
-        .clipShape(Capsule())
+        .pickerStyle(.segmented)
+        .tint(Color.blue.opacity(0.15))
     }
 }

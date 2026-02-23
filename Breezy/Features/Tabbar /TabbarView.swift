@@ -8,25 +8,37 @@
 import SwiftUI
 
 struct TabbarView: View {
+    private enum Tab {
+        case home
+        case cities
+        case settings
+    }
+    @State private var selectedTab: Tab = .home
     let router: AppRouter
     
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab){
             HomeView(router: router)
                 .tabItem {
-                    Label("Home", systemImage: "house")
+                    Image(systemName: selectedTab == .home ? "house.fill" : "house")
+                    Text("Home")
                 }
+                .tag(Tab.home)
             
             AddCitiesView(router: router)
                 .tabItem {
-                    Label("Cities", systemImage: "map")
+                    Image(systemName: selectedTab == .cities ? "map.fill" : "map")
+                    Text("Cities")
                 }
+                .tag(Tab.cities)
             
             SettingsView(router: router)
                 .tabItem {
-                    Label("Settings", systemImage: "gearshape")
+                    Image(systemName: selectedTab == .settings ? "gearshape.fill" : "gearshape")
+                    Text("Settings")
                 }
+                .tag(Tab.settings)
         }
-        .tint(.yellow.opacity(0.8))
+        .tint(.yellow.opacity(0.6))
     }
 }
