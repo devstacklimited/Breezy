@@ -51,7 +51,7 @@ struct SettingsView: View {
                         settingsRow(
                             icon: "paintbrush.fill",
                             title: "Theme",
-                            subtitle: "Match iOS, light, or dark"
+                            subtitle: "Adjust app theme"
                         ){
                             Picker("Appearance", selection: $selectedAppearance){
                                 Text("Light")
@@ -72,8 +72,8 @@ struct SettingsView: View {
                         
                         settingsRow(
                             icon: "drop.fill",
-                            title: "Liquid glass depth",
-                            subtitle: "Adjust blur and reflections"
+                            title: "Glass depth",
+                            subtitle: "Adjusts glass effect"
                         ){
                             Picker("", selection: $glassManager.style){
                                 ForEach(GlassStyle.allCases, id: \.self){ style in
@@ -90,7 +90,7 @@ struct SettingsView: View {
                         settingsRow(
                             icon: "thermometer",
                             title: "Temperature",
-                            subtitle: "Switch between Celsius and Fahrenheit"
+                            subtitle: "Adjust Temperature scale"
                         ){
                             segmentedControl(
                                 options: ["°F","°C"],
@@ -106,7 +106,7 @@ struct SettingsView: View {
                         settingsRow(
                             icon: "wind",
                             title: "Wind speed",
-                            subtitle: "Miles per hour or meters per second"
+                            subtitle: "Adjust wind speed units"
                         ){
                             segmentedControl(
                                 options: ["mph","m/s"],
