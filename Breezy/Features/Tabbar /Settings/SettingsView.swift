@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     let router: AppRouter
     @EnvironmentObject private var glassManager: GlassManager
-    @State private var selectedTheme = "System"
+    @AppStorage("Appearance") private var selectedAppearance: String = "Light"
     @State private var selectedTemp = "°F"
     @State private var selectedWind = "mph"
     
@@ -53,11 +53,17 @@ struct SettingsView: View {
                             title: "Theme",
                             subtitle: "Match iOS, light, or dark"
                         ){
-                            segmentedControl(
-                                options: ["System","Light","Dark"],
-                                selection: $selectedTheme
-                            ){ selected in
-                                
+                            Picker("Appearance", selection: $selectedAppearance){
+                                Text("Light")
+                                    .tag("Light")
+                                Text("Dark")
+                                    .tag("Dark")
+                                Text("System")
+                                    .tag("System")
+                            }
+                            .pickerStyle(.segmented)
+                            .onChange(of: selectedAppearance){ _, newValue in
+                                updateAppearanceMode(newValue)
                             }
                             .frame(width: 190)
                         }
@@ -228,6 +234,21 @@ struct SettingsView: View {
         .pickerStyle(.segmented)
         .onChange(of: selection.wrappedValue){ oldValue, newValue in
             onSelection(newValue)
+        }
+    }
+    
+    private func updateAppearanceMode(_ mode: String){
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            switch mode {
+            case "Dark":
+                windowScene.windows.first?.overrideUserInterfaceStyle = .dark
+            case "Light":
+                windowScene.windows.first?.overrideUserInterfaceStyle = .light
+            case "System":
+                windowScene.windows.first?.overrideUserInterfaceStyle = .unspecified
+            default:
+                break
+            }
         }
     }
 }
