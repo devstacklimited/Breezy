@@ -43,6 +43,7 @@ extension View {
     @ViewBuilder
     func glassContainer(
         spacing: CGFloat = 12,
+        
         content: () -> some View
     ) -> some View {
         if #available(iOS 26, *){
