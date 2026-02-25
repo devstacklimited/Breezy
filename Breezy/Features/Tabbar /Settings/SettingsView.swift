@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     let router: AppRouter
+    @EnvironmentObject private var glassManager: GlassManager
     @State private var selectedTheme = "System"
     @State private var selectedTemp = "°F"
     @State private var selectedWind = "mph"
@@ -55,7 +56,9 @@ struct SettingsView: View {
                             segmentedControl(
                                 options: ["System","Light","Dark"],
                                 selection: $selectedTheme
-                            )
+                            ){ selected in
+                                
+                            }
                             .frame(width: 190)
                         }
                         
@@ -66,14 +69,14 @@ struct SettingsView: View {
                             title: "Liquid glass depth",
                             subtitle: "Adjust blur and reflections"
                         ){
-                            Capsule()
-                                .fill(Color.white.opacity(0.5))
-                                .overlay(
-                                    Text("Standard")
-                                        .interFont(.medium, 13)
-                                        .foregroundColor(.gray)
-                                )
-                                .frame(width: 100, height: 32)
+                            Picker("", selection: $glassManager.style){
+                                ForEach(GlassStyle.allCases, id: \.self){ style in
+                                    Text(style.rawValue.capitalized)
+                                        .tag(style)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                            .frame(width: 220)
                         }
                     }
                     /// UNITS SECTION
@@ -86,7 +89,9 @@ struct SettingsView: View {
                             segmentedControl(
                                 options: ["°F","°C"],
                                 selection: $selectedTemp
-                            )
+                            ){ selected in
+                                
+                            }
                             .frame(width: 80)
                         }
                         
@@ -100,7 +105,9 @@ struct SettingsView: View {
                             segmentedControl(
                                 options: ["mph","m/s"],
                                 selection: $selectedWind
-                            )
+                            ){ selected in
+                                
+                            }
                             .frame(width: 90)
                         }
                     }
@@ -209,7 +216,8 @@ struct SettingsView: View {
     /// Segment Control
     private func segmentedControl(
         options: [String],
-        selection: Binding<String>
+        selection: Binding<String>,
+        onSelection: @escaping (String) -> Void
     ) -> some View {
         Picker("", selection: selection){
             ForEach(options, id: \.self){ option in
@@ -218,5 +226,8 @@ struct SettingsView: View {
             }
         }
         .pickerStyle(.segmented)
+        .onChange(of: selection.wrappedValue){ oldValue, newValue in
+            onSelection(newValue)
+        }
     }
 }

@@ -11,6 +11,7 @@ import SwiftUI
 @main
 struct BreezyApp: App {
     @StateObject private var sessionManager = AppSessionManager()
+    @StateObject private var glassManager = GlassManager()
     @StateObject private var homePresenter = HomePresenter(
             interactor: WeatherInteractor(service: WeatherService.shared)
         )
@@ -21,6 +22,7 @@ struct BreezyApp: App {
         }
         .environmentObject(sessionManager)
         .environmentObject(homePresenter)
+        .environmentObject(glassManager)
     }
     
     init(){
