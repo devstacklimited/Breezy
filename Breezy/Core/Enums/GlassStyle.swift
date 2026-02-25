@@ -14,24 +14,24 @@ enum GlassStyle: String, CaseIterable {
     
     var blurRadius: CGFloat {
         switch self {
-        case .subtle: return 8
-        case .standard: return 16
-        case .immersive: return 28
+        case .subtle: return 0
+        case .standard: return 8
+        case .immersive: return 8
         }
     }
     
     var tintOpacity: Double {
         switch self {
-        case .subtle: return 0.08
-        case .standard: return 0.15
-        case .immersive: return 0.25
+        case .subtle: return 0.0
+        case .standard: return 0.08
+        case .immersive: return 0.16
         }
     }
     
     var shadowOpacity: Double {
         switch self {
         case .subtle: return 0.08
-        case .standard: return 0.15
+        case .standard: return 0.08
         case .immersive: return 0.30
         }
     }

@@ -15,12 +15,11 @@ struct LiquidGlassModifier<S: Shape>: ViewModifier {
     
     func body(content: Content) -> some View {
         let style = glassManager.style
-        
         if #available(iOS 26, *){
             content
                 .glassEffect(
                     .clear
-                        .tint((tint ?? .white).opacity(style.tintOpacity))
+                        .tint((tint ?? .blue).opacity(style.tintOpacity))
                         .interactive(interactive),
                     in: shape
                 )
@@ -29,7 +28,6 @@ struct LiquidGlassModifier<S: Shape>: ViewModifier {
                     color: .black.opacity(style.shadowOpacity),
                     radius: style.blurRadius
                 )
-            
         } else {
             content
                 .background(
