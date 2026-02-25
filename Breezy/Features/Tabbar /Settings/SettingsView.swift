@@ -148,7 +148,7 @@ struct SettingsView: View {
             VStack(alignment: .leading, spacing: 16){
                 Text(title)
                     .poppinFont(.bold, 18)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.white)
                     .padding(.leading, 5)
                 
                 VStack(spacing: 16){
@@ -176,14 +176,14 @@ struct SettingsView: View {
                 Image(systemName: icon)
                     .foregroundColor(.blue)
             }
-            
             VStack(alignment: .leading, spacing: 4){
                 Text(title)
-                    .interFont(.medium, 15)
+                    .poppinFont(.bold, 15)
+                    .foregroundStyle(.white.opacity(0.7))
                 
                 Text(subtitle)
                     .interFont(.regular, 13)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.white)
             }
             Spacer()
             trailing()
@@ -207,15 +207,16 @@ struct SettingsView: View {
             }
             VStack(alignment: .leading, spacing: 4){
                 Text(title)
-                    .interFont(.medium, 15)
+                    .poppinFont(.bold, 15)
+                    .foregroundStyle(.white.opacity(0.7))
                 
                 Text(subtitle)
                     .interFont(.regular, 13)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.white)
             }
             Spacer()
             Image(systemName: "chevron.right")
-                .foregroundColor(.gray)
+                .foregroundColor(.white)
         }
     }
     
