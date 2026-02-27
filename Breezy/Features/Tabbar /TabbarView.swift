@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 26.0, *)
 struct TabbarView: View {
     private enum Tab {
         case home
