@@ -23,21 +23,16 @@ extension View {
     @ViewBuilder
     func liquidGlassEffect<S: Shape>(
         in shape: S,
-        tint: Color? = nil,
+        tint: Color? = .white,
         interactive: Bool = false
     ) -> some View {
-        if #available(iOS 26, *){
-            self
-                .glassEffect(.clear.tint(tint).interactive(interactive), in: shape)
-                .clipShape(shape)
-        } else {
-            self
-                .background {
-                    shape
-                        .fill(Color.customTab)
-                }
-                .clipShape(shape)
-        }
+        modifier(
+            LiquidGlassModifier(
+                shape: shape,
+                tint: tint,
+                interactive: interactive
+            )
+        )
     }
     
     @ViewBuilder
