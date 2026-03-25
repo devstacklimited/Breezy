@@ -1,8 +1,8 @@
-# 🌤️ Breezy — iOS Weather App
+# Breezy — iOS Weather App
 A beautifully crafted iOS weather experience inspired by Apple’s native Weather app.
 
 
-## 🚀 Overview
+## Overview
 Breezy is a modern, SwiftUI-based weather application designed to deliver fast, elegant, and accurate weather updates.
 This app is built with clean architecture, async/await networking, modular services, and secure API key handling using Keychain.
 
@@ -133,7 +133,7 @@ NSLocationWhenInUseUsageDescription
 NSLocationAlwaysAndWhenInUseUsageDescription
 ```
 
-## 🗺 Roadmap
+## Roadmap
 🔜 Coming Soon:
 * Dark mode enhancements
 * Real-time animated backgrounds
@@ -143,13 +143,13 @@ NSLocationAlwaysAndWhenInUseUsageDescription
 * Siri shortcuts
 
 
-## 🚧 Future Improvements:
+## Future Improvements:
 * Offline caching
 * Multi-language support
 * Temperature unit toggle (°C / °F)
 
 
-## 🙌 Contributing
+## Contributing
 
 Pull requests are welcome!
 Please open an issue for new features or bug reports.
